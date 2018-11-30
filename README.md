@@ -2,3 +2,10 @@
 
 >Whether or not this is a good idea, while trying to figure out file/directory structure,
 >is something that I'm sure I'll revist soon.
+
+<br><br>
+
+<br><br>
+
+## TO DO
+[ ] - for the love of god reformat and fix todo.txt

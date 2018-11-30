@@ -1,0 +1,146 @@
+/**
+ * rough copy/paste of email thread I kept up with myself on ideas for..here...?
+ */
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+---------------------
+index.html at jsore.com should be a breif explanation of my experience, formal
+portfolio should be a sub directory that looks nice on the internet but can be
+exported to a single page PDF or word doc without any overly eager coloring
+formatting or pictures
+---------------------
+
+---------------------
+../study-hall
+OR
+../study_hall
+OR
+../studyhall
+OR
+../StudyHall
+?
+---------------------
+
+---------------------
+make index.html at ../<studyhall>
+-- a summary of what I do (basically make a ton of notes)
+-- what my current base environment is and what services/apps/tech I'm using
+-- what to expect within each area
+-- what will be added in future
+---------------------
+
+---------------------
+../<studyhall>/full-stack-adventures
+OR
+../<studyhall>/road-to-full-stack-development
+OR
+../<studyhall>/learn-all-the-things
+(..then come to terms with the fact that it's basically not possible)
+(..then realize you first need to learn how to learn...so so so many things to
+    learn and so many ways to do those things)
+---------------------
+
+---------------------
+Be prepared for future header/footer/sidebar and make everything modular, to
+    just plop them in to existing pages
+
+...maybe just stick some empty divs around the page as placeholders?
+---------------------
+
+---------------------
+Propose/formulate a sitemap with short explanations of each item
+---------------------
+
+---------------------
+Add to TODO's: seperate web/DNS+mail/database services across 3 separate
+    servers, after cleaning up DNS on current linode VM
+---------------------
+
+---------------------
+Does linode allow mail?
+---------------------
+
+---------------------
+Need to establish a single reusable color scheme
+---------------------
+
+---------------------
+Google ad services or other ad services without displa ying ads?
+---------------------
+
+---------------------
+Do I need to do that stupid 'site uses cookies' or anything for gdpr?
+---------------------
+
+---------------------
+Logo ideas? See attached
+---------------------
+
+---------------------
+BUY STYLUS FOR MACBOOK, possibly compatible with iphone
+---------------------
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+More logo ideas attached
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+So...
+
+jsore.com = node/JS     // Do I need any license to use node.js logo? 
+
+php.jsore.com = PHP notes/docs/examples instead of pure JS?
+Make a PHP sub dir instead?
+
+Subdomain VS directory at end of URI?
+
+
+Create 'living document' about current server config
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+"explain what I'm doing like I'm explaining things to gma Cindy" and include
+popups/tooltips/sidebartreethings that explain each step in more depth
+
+"EXPLAIN LIKE IM OLD"
+
+Ex:
+-- What happens when you type a website into browser
+-- What happens next
+-- Why does the stuff appear on your monitor in your browser
+-- How does the internet know what content to show
+-- What happens when... (you log in, submit request for contact, click to ask to
+    speak to someone, click a link to go to some other page on the website)
+
+...etc etc etc, high level technical concepts and dive deeper
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
