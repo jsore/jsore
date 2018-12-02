@@ -17,3 +17,5 @@
 ### Things of possible interest
 
 [ ] - npm module <b>0MQ</b> for messaging patterns, instead of using plain socket communication
+
+> why the hell is check-list formatting not working? https://i.imgur.com/iCD0mbi.png
