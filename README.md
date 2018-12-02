@@ -8,4 +8,12 @@
 <br><br>
 
 ## TO DO
+
 [ ] - for the love of god reformat and fix todo.txt
+
+
+<br>
+
+### Things of possible interest
+
+[ ] - npm module <b>0MQ</b> for messaging patterns, instead of using plain socket communication
