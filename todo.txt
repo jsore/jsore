@@ -2,6 +2,7 @@
  * rough copy/paste of email thread I kept up with myself on ideas for..here...?
  */
 
+x   create a dev branch for dev work
 o   #welcome splash page
     x   connection test....sucess
     o   favicon/logo
