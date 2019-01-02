@@ -4,11 +4,13 @@
 
 o   #welcome splash page
     x   connection test....sucess
+    o   favicon/logo
     o   wireframe
     o   sidebar - about me
         o   profile pic, crop from FB, remove all background but face?
 o   #resume
 o   #breakroom-ramen
+
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
