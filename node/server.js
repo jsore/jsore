@@ -41,6 +41,7 @@ const app = express();
 
 
 const httpsOptions = {
+    /** TODO: move this to nconf */
     key: fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem'),
 };
@@ -84,6 +85,21 @@ app.get('/', (req, res) => {
 });
 //app.use(require('./lib/bundle.js'));
 
+
+/**
+ * www.jsore.com >> jsore.com redirect
+ */
+//const wwwRedirect = (req, res, next) => {
+//    if (req.headers.host.slice(0, 4) === 'www.') {
+//        const cleanHost = req.headers.host.slice(4);
+//        return res.redirect(301, req.protocol + '://' + cleanHost + req.originalUrl);
+//    }
+//    next();
+//};
+//app.set('trust proxy', true);
+//app.use(wwwRedirect);
+
+
 https.createServer(httpsOptions, app)
     .listen(443, () => console.log('https ready'));
 
@@ -98,6 +114,8 @@ http.createServer((req, res) => {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.end();
 }).listen(80, () => console.log('http ready'));
+
+
 
 //app.use('/api');
 //app.listen(443, () => console.log('app.listen ready'));
