@@ -14,6 +14,12 @@ o   #breakroom-ramen
 o   Wakatime integration
     (https://github.com/jestillore/wakatimejs)
 o   security review, are we secure?
+o   uptime/site monitoring
+    free:
+     https://uptimerobot.com/
+     https://grafana.com/plugins/raintank-worldping-app
+    cheap:
+     https://updown.io/#pricing
 
 
 
