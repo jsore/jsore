@@ -14,13 +14,16 @@ o   #breakroom-ramen
 o   Wakatime integration
     (https://github.com/jestillore/wakatimejs)
 o   security review, are we secure?
+    locking down directory access:
+    https://medium.com/@_bl4de/hidden-directories-and-files-as-a-source-of-sensitive-information-about-web-application-84e5c534e5ad
 o   uptime/site monitoring
     free:
      https://uptimerobot.com/
      https://grafana.com/plugins/raintank-worldping-app
     cheap:
      https://updown.io/#pricing
-
+o   google analytics (analytics.js)
+o   page speed analyzer: https://wulfdeck.com/
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
