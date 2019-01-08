@@ -40,11 +40,11 @@ const app = express();
 
 
 
-const httpsOptions = {
-    /** TODO: move this to nconf */
-    key: fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem'),
-};
+//const httpsOptions = {
+//    /** TODO: move this to nconf */
+//    key: fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem'),
+//    cert: fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem'),
+//};
 
 
 app.use(morgan('dev'));
@@ -100,9 +100,27 @@ app.get('/', (req, res) => {
 //app.use(wwwRedirect);
 
 
-https.createServer(httpsOptions, app)
-    .listen(443, () => console.log('https ready'));
+if (isDev) {
+    http.createServer(app).listen(8008, () => console.log('dev server ready'));
+} else {
+    const httpsOptions = {
+        /** TODO: move this to nconf */
+        key: fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem'),
+    };
+    https.createServer(httpsOptions, app)
+        .listen(443, () => console.log('https ready'));
 
+    http.createServer((req, res) => {
+        res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+        res.end();
+    }).listen(80, () => console.log('http ready'));
+}
+
+
+
+//https.createServer(httpsOptions, app)
+//    .listen(443, () => console.log('https ready'));
 
 /**
  * http >> https redirect
@@ -110,12 +128,32 @@ https.createServer(httpsOptions, app)
  * this is replacing my Apache <virtualhost> options since
  *   I'm not using Apache at all on this project
  */
-http.createServer((req, res) => {
-    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-    res.end();
-}).listen(80, () => console.log('http ready'));
+//http.createServer((req, res) => {
+//    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+//    res.end();
+//}).listen(80, () => console.log('http ready'));
 
 
 
 //app.use('/api');
 //app.listen(443, () => console.log('app.listen ready'));
+
+
+// https://www.zeptobook.com/how-to-create-restful-crud-api-with-node-js-mongodb-and-express-js/
+/*
+// get dependencies
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+// parse requests
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+// default route
+app.get('/', (req, res) => {
+    res.json({"message": "Welcome to ZeptoBook Product app"});
+});
+// listen on port 3000
+app.listen(3000, () => {
+    console.log("Server is listening on port 3000");
+});
+*/
