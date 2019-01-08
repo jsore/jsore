@@ -20,6 +20,7 @@ o   uptime/site monitoring
      https://grafana.com/plugins/raintank-worldping-app
     cheap:
      https://updown.io/#pricing
+o   google analytics (analytics.js)
 
 
 
