@@ -26,6 +26,10 @@ o   google analytics (analytics.js)
 o   page speed analyzer: https://wulfdeck.com/
 o   import thoughtflow from notepad to here
 
+read ENV vars on startup
+https://github.com/RisingStack/multi-process-nodejs-example/blob/master/config/components/common.js
+from https://www.reddit.com/r/node/comments/8eir7e/advanced_nodejs_project_structure_tutorial/
+
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1
