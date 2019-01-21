@@ -118,6 +118,7 @@ if (isDev) {
 }
 
 
+/*----------  https option  ----------*/
 
 //https.createServer(httpsOptions, app)
 //    .listen(443, () => console.log('https ready'));
@@ -165,6 +166,7 @@ app.listen(3000, () => {
 
 
 
+/*----------  another https option, stolen from reddit  ----------*/
 
 // from https://medium.freecodecamp.org/the-definitive-node-js-handbook-6912378afc6e
 // Making HTTP requests with Node.js
