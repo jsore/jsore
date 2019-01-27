@@ -31,6 +31,36 @@ https://github.com/RisingStack/multi-process-nodejs-example/blob/master/config/c
 from https://www.reddit.com/r/node/comments/8eir7e/advanced_nodejs_project_structure_tutorial/
 
 
+
+
+
+/*====================================
+=            Architecture            =
+====================================*/
+
+- It will not process a lot of data
+- Mostly middleware, other services do heavy lifting
+- Async nature for handling multiple requests from different sources
+
+.-------------------. .--------------------.
+|    web browser    | |   mobile browser   |    <-- what needs to be visually pleasing & accessible
+'-------------------' '--------------------'
+.------------------------------------------.
+|             REST API service             |    <-- what needs to be developed
+'------------------------------------------'
+.-----------------. .----------------------.
+|       DB        | |    REST middleware   |    <-- what needs to be secured
+|  Postgre SQL    | |       & services     |
+'-----------------' '----------------------'
+
+
+
+
+
+
+
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
