@@ -54,8 +54,166 @@ from https://www.reddit.com/r/node/comments/8eir7e/advanced_nodejs_project_struc
 '-----------------' '----------------------'
 
 
+o   use ENV variables for deployment specific configs
+
+    - make the app able to be deployed at any given moment
+      by separating config & app internals
+
+    - hit them with process.env object
+
+    - https://blog.codeship.com/advanced-node-js-project-structure-tutorial/
+    // config/config.js
+    'use strict'
+    // required environment variables
+    [
+      'NODE_ENV',
+      'PORT'
+    ].forEach((name) => {
+      if (!process.env[name]) {
+        throw new Error(`Environment variable ${name} is missing`)
+      }
+    })
+    // validation...
+    const { error, value: envVars } = joi.validate(process.env, envVarsSchema)
+    if (error) {
+      throw new Error(`Config validation error: ${error.message}`)
+    }
+
+    const config = {
+      env: envVars.NODE_ENV,
+      isTest: envVars.NODE_ENV === 'test',
+      isDevelopment: envVars.NODE_ENV === 'development',
+      logger: {
+        level: envVars.LOGGER_LEVEL,
+        enabled: envVars.LOGGER_ENABLED
+      },
+      server: {
+        port: envVars.PORT
+      }
+      // ...
+    }
+    module.exports = config
 
 
+
+/*----------  (Suggested) Project Structure  ----------*/
+
+.
+|-- .git
+|   `-- ...
+|-- config
+|   |-- webpack.config.js
+|   |-- development.config.js
+|   `-- ...
+|-- models
+|   |-- jsore
+|   |   |-- index.js
+|   |   `-- templates.js
+|   |-- BreakRoomRamen
+|   |   |-- index.js
+|   |   |-- common.js
+|   |   `-- tempaltes.js
+|-- routes
+|   |-- controllers     // request managers
+|   |-- middlewares     // request middlewares
+|   `-- routes.js       // define routes and middlewares
+|-- services            // implement external services
+|   `-- ...
+|-- db                  // data access stuff
+|   `-- index.js        // implement Sequalize ORM
+|-- core                // business logic
+|   |-- "accounts.js"   // some example files...
+|   |-- "sales.js"      // ...
+|   |-- "comments.js"   // ...
+|   |-- ...
+|-- utils               // other util libraries (formats, validation, etc)
+|   `-- ...
+|-- tests               // Mocha testing
+|   |-- jsore
+|   |-- BreakRoomRamen
+|   `-- ...
+|-- scripts             // standalone dev scripts...
+|   `-- ...             // be sure to list these inside `npm scripts`
+|-- deploy.js           // deployment automation
+|-- git.ignore
+|-- packagae.json
+|-- package.lock
+|-- README.md
+|-- server.js           // app entry
+
+// revised
+.
+|-- .git
+|   `-- ...
+|-- .gitignore
+|-- breakroomramen
+|   |-- utils               // 2nd leve Postgre access, etc
+|   |   `-- ...
+|   |-- auth
+|   |   `-- ...             // user management
+|   |-- index.js
+|   |-- common.js
+|   `-- templates.js
+|-- jsore
+|   |-- welcome
+|   |   `-- welcome.js
+|   |-- resume
+|   |   `-- resume.js
+|   |-- ramblings
+|   |   |-- utils
+|   |   |   `-- ...         // 2nd leve Postgre access, etc
+|   |   `-- ramblings.js
+|   `-- templates.js
+|-- db                      // top-level Postgres management
+|   `-- ...
+|-- scripts                 // deployment automation
+|   `-- deploy.js
+|-- server.js               // main entry
+|-- package.json
+|-- README.md
+
+
+
+
+
+/*----------  Modules  ----------*/
+
+items with --> * <-- are maybes
+
+Express
+- expose app data
+- manage HTTP requests
+- handle HTTPS security
+- routing API endpoints
+
+Passport *
+- user authentication
+- session management
+    (possible replacement: Axios)
+
+Webpack *
+- production vs development environment management
+- config options handler
+    (possible replacement: PM2)
+
+Mocha
+- unit testing
+
+
+/*----------  Things to look into  ----------*/
+
+Axios module
+- API communication
+- promise based HTTP client (make GET, POST requests)
+- authentication
+- send custom headers
+
+Sequalize module
+- promise based ORM for DB data access
+- manage migrations, queries, transactions, etc
+
+PM2 module
+- prod environment management for Node apps
 
 
 
