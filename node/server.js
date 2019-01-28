@@ -10,22 +10,25 @@ const http = require('http');
 const {URL} = require('url');
 const path = require('path');
 
-
+// trying to get HTTPS in dev
 const nconf = require('nconf');
-nconf
-    .argv()
-    .env('__')
-    .defaults({'NODE_ENV': 'development'});
+//nconf
+//    .argv()
+//    .env('__')
+//    .defaults({'NODE_ENV': 'development'});
+//const NODE_ENV = nconf.get('NODE_ENV');
 const NODE_ENV = nconf.get('NODE_ENV');
-const isDev = NODE_ENV === 'development';
-
+//const isDev = NODE_ENV === 'development';
+//
 nconf
     .defaults({'conf': path.join(__dirname, `${NODE_ENV}.config.json`)})
     .file(nconf.get('conf'));
 
 
 //const serviceUrl = 'https://jsore.com';
-const serviceUrl = new URL(nconf.get('serviceUrl'));
+// trying to get https in dev
+//const serviceUrl = new URL(nconf.get('serviceUrl'));
+const serviceUrl = new URL('https://apachetestserver.com');
 //const servicePort = 443;
 const servicePort =
     serviceUrl.port || (serviceUrl.protocol === 'https:' ? 443 : 80);
@@ -50,8 +53,9 @@ const app = express();
 app.use(morgan('dev'));
 
 
-
-if (isDev) {
+// trying to get HTTPS in dev
+if (serviceUrl) {
+//if (isDev) {
     const webpack = require('webpack');
     const webpackMiddleware = require('webpack-dev-middleware');
     const webpackConfig = require('./webpack.config.js');
@@ -100,22 +104,34 @@ app.get('/', (req, res) => {
 //app.use(wwwRedirect);
 
 
-if (isDev) {
-    http.createServer(app).listen(8008, () => console.log('dev server ready'));
-} else {
+// trying to get HTTPS in dev
+//if (isDev) {
+//    http.createServer(app).listen(8008, () => console.log('dev server ready'));
+//} else {
     const httpsOptions = {
         /** TODO: move this to nconf */
-        key: fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem'),
+        //key: fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem'),
+        //cert: fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem'),
+        // trying for HTTPS in dev
+        key: fs.readFileSync('../../../../../../apachetestserver.com+3-key.pem'),
+        //key: fs.readFileSync('../../../../../../Library/Application Support/mkcert/rootCA-key.pem'),
+        cert: fs.readFileSync('../../../../../../apachetestserver.com+3.pem'),
+        //cert: fs.readFileSync('../../../../../../Library/Application Support/mkcert/rootCA.pem'),
     };
     https.createServer(httpsOptions, app)
         .listen(443, () => console.log('https ready'));
+        //.listen(8282, () => console.log('https ready'));
 
     http.createServer((req, res) => {
         res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
         res.end();
-    }).listen(80, () => console.log('http ready'));
-}
+    })
+        .listen(80, () => console.log('http ready'));
+        //.listen(8383, () => console.log('http ready'));
+//}
+
+
+
 
 
 /*----------  https option  ----------*/
