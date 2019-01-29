@@ -96,6 +96,9 @@ o   use ENV variables for deployment specific configs
 
 
 
+o   dump the psuedo-paginated hash design
+
+
 /*----------  (Suggested) Project Structure  ----------*/
 
 .
