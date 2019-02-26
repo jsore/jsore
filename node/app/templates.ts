@@ -2,8 +2,9 @@
  * html/node/app/templates.ts
  */
 
-// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap';
+//import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap';
+import './styles.css';
 
 import * as Handlebars from '../node_modules/handlebars/dist/handlebars.js';
 
@@ -14,10 +15,14 @@ export const main = Handlebars.compile(`
 `);
 
 export const testBody = Handlebars.compile(`
-<div class="panel panel-default">
-    <div class="panel-heading">A Heading</div>
-    <div class="panel-body">
-        <p>A Body</p>
+<div class="parent">
+    <div class="bio">
+        <div class="bio-name">
+            <p class="bio-text">Justin Sorensen</p>
+        </div>
+        <div class="bio-background">
+            <p class="bio-text">Abuse Analyst at IBM Cloud and Full Stack Developer</p>
+        </div>
     </div>
 </div>
 `);
