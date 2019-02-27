@@ -18,6 +18,7 @@ export const main = Handlebars.compile(`
 
 export const testBody = Handlebars.compile(`
 <div class="parent">
+    <!-- <div class="bio" id="bio-borderimg"> -->
     <div class="bio">
         <div class="bio-name">
             <p class="bio-text">Justin Sorensen</p>
@@ -30,7 +31,7 @@ export const testBody = Handlebars.compile(`
                 This site is still under construction.
             </p>
             <!-- <p class="github"> -->
-                <a href="https://github.com/jsore">Find me on GitHub for now!</a>
+                <span><a href="https://github.com/jsore">Find me on GitHub for now!</a></span>
             <!-- </p> -->
         </div>
     </div>
