@@ -5,6 +5,7 @@
  *
  * Entry point for jsore.com
  */
+
 const fs = require('fs');
 const https = require('https');
 const http = require('http');
@@ -121,15 +122,15 @@ app.get('/', (req, res) => {
         //cert: fs.readFileSync('../../../../../../Library/Application Support/mkcert/rootCA.pem'),
     };
     https.createServer(httpsOptions, app)
-        .listen(443, () => console.log('https ready'));
-        //.listen(8282, () => console.log('https ready'));
+        //.listen(443, () => console.log('https ready'));
+        .listen(8282, () => console.log('https ready'));
 
     http.createServer((req, res) => {
         res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
         res.end();
     })
-        .listen(80, () => console.log('http ready'));
-        //.listen(8383, () => console.log('http ready'));
+        //.listen(80, () => console.log('http ready'));
+        .listen(8383, () => console.log('http ready'));
 //}
 
 

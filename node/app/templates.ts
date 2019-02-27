@@ -1,5 +1,7 @@
 /**
  * html/node/app/templates.ts
+ *
+ * main layout
  */
 
 //import '../node_modules/bootstrap/dist/css/bootstrap.min.css';

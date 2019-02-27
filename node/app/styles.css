@@ -1,17 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Archivo');
 body {
-    /*margin: 0px 0px 0px 0px;*/
-    /*padding: 0px 0px 0px 0px;*/
+    font-family: 'Archivo', sans-serif;
 }
-
+.container {
+    display: grid;
+    grid-template-rows: auto;
+    /*grid-template-rows: 100%;*/
+    grid-template-columns: auto;
+    /*align-items: center;*/
+    /*justify-items: center;*/
+}
+.jsore-main {
+    display: grid;
+    /*grid-template-rows: auto;*/
+    align-items: center;
+}
 /** top container under jsore-main */
 .parent {
-    border: 1px solid black;
-
-    /*grid-template-columns: 100px 500px 100px;*/
-    /*grid-template-rows: 100px 100px;*/
-    /*grid-template-rows: auto auto;*/
-    /*grid-gap: 20px;*/
-
     /** force grid instead of block */
     display: grid;
     /** define three columns */
@@ -21,63 +26,45 @@ body {
 
 /** container for bio items */
 .bio {
-    border: 1px solid black;
-
-    /** hacks, don't work */
-    /*grid-column-start: 2;*/
-    /*grid-column-end: 3;*/
+    border: 1px solid #efefef;
+    box-shadow: 2px 6px 25px rgba(0, 0, 0, 0.1);
+    transition: all .3s ease;
 
     /** force grid instead of block */
     display: grid;
     /** there's gonna be two rows in this container */
-    grid-template-rows: 150px 150px;
+    grid-template-rows: 50px 50px;
     /** put the container into middle column */
     grid-column: 2;
+    padding: 30px 30px 30px 30px;
+}
+.bio:hover {
+    box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.2);
 }
 
 .bio-name {
-    border: 1px solid black;
-
-    /** hacks, don't work */
-    /*align-self: center;*/
-    /*justify-self: center;*/
-    /*.p { align-self: stretch; }*/
-    /*justify-content: center;*/
-    /*align-content: center;*/
-    /*align-content: space-evenly;*/
-    /*grid-row-start: 1;*/
-    /*grid-row-end: 2;*/
-
     /** force grid instead of block */
     display: grid;
     /** top row */
     grid-row: 1;
+    font-size: 30px;
+    font-weight: bold;
+    font-weight: 100;
+    color: #444444;
 }
 
 .bio-background {
-    border: 1px solid black;
-
-    /** hacks, don't work */
-    /*align-self: center;*/
-    /*justify-self: center;*/
-    /*.p { align-self: stretch; }*/
-    /*justify-self: center;*/
-    /*justify-content: center;*/
-    /*align-items: stretch;*/
-    /*align-content: space-evenly;*/
-
     /** force grid instead of block */
     display: grid;
     /** bottom row */
     grid-row: 2;
+    font-size: 25px;
+    font-weight: light;
+    /*font-weight: 200;*/
+    color: #666666;
 }
 
 .bio-text {
-    /** hacks, don't work */
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-
     /** force grid instead of block */
     display: grid;
     /** align-self + justify-self one liner */

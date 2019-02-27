@@ -25,7 +25,8 @@
     "nconf": "^0.10.0",
     "nodemon": "^1.18.9",
     "request": "^2.88.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "typeface-archivo-black": "0.0.54"
   },
   "devDependencies": {
     "bootstrap": "^4.2.1",

@@ -1,8 +1,10 @@
 /**
  * html/node/app/index.ts
+ *
+ * main view
  */
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap';
+// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap';
 import * as templates from './templates.ts';
 
 const renderPage = async () => {
