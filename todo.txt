@@ -2,6 +2,7 @@
  * rough copy/paste of email thread I kept up with myself on ideas for..here...?
  */
 
+x   create a dev branch for dev work
 o   #welcome splash page
     x   connection test....sucess
     o   favicon/logo
@@ -10,6 +11,215 @@ o   #welcome splash page
         o   profile pic, crop from FB, remove all background but face?
 o   #resume
 o   #breakroom-ramen
+o   Wakatime integration
+    (https://github.com/jestillore/wakatimejs)
+o   security review, are we secure?
+    locking down directory access:
+    https://medium.com/@_bl4de/hidden-directories-and-files-as-a-source-of-sensitive-information-about-web-application-84e5c534e5ad
+o   uptime/site monitoring
+    free:
+     https://uptimerobot.com/
+     https://grafana.com/plugins/raintank-worldping-app
+    cheap:
+     https://updown.io/#pricing
+o   google analytics (analytics.js)
+o   page speed analyzer: https://wulfdeck.com/
+o   import thoughtflow from notepad to here
+o   JSON file import for mock data to init a DB?
+
+read ENV vars on startup
+https://github.com/RisingStack/multi-process-nodejs-example/blob/master/config/components/common.js
+from https://www.reddit.com/r/node/comments/8eir7e/advanced_nodejs_project_structure_tutorial/
+
+
+
+
+
+/*====================================
+=            Architecture            =
+====================================*/
+
+- It will not process a lot of data
+- Mostly middleware, other services do heavy lifting
+- Async nature for handling multiple requests from different sources
+
+.-------------------. .--------------------.
+|    web browser    | |   mobile browser   |    <-- what needs to be visually pleasing & accessible
+'-------------------' '--------------------'
+.------------------------------------------.
+|             REST API service             |    <-- what needs to be developed
+'------------------------------------------'
+.-----------------. .----------------------.
+|       DB        | |    REST middleware   |    <-- what needs to be secured
+|  Postgre SQL    | |       & services     |
+'-----------------' '----------------------'
+
+
+o   use ENV variables for deployment specific configs
+
+    - make the app able to be deployed at any given moment
+      by separating config & app internals
+
+    - hit them with process.env object
+
+    - https://blog.codeship.com/advanced-node-js-project-structure-tutorial/
+    // config/config.js
+    'use strict'
+    // required environment variables
+    [
+      'NODE_ENV',
+      'PORT'
+    ].forEach((name) => {
+      if (!process.env[name]) {
+        throw new Error(`Environment variable ${name} is missing`)
+      }
+    })
+    // validation...
+    const { error, value: envVars } = joi.validate(process.env, envVarsSchema)
+    if (error) {
+      throw new Error(`Config validation error: ${error.message}`)
+    }
+
+    const config = {
+      env: envVars.NODE_ENV,
+      isTest: envVars.NODE_ENV === 'test',
+      isDevelopment: envVars.NODE_ENV === 'development',
+      logger: {
+        level: envVars.LOGGER_LEVEL,
+        enabled: envVars.LOGGER_ENABLED
+      },
+      server: {
+        port: envVars.PORT
+      }
+      // ...
+    }
+    module.exports = config
+
+
+
+o   dump the psuedo-paginated hash design
+
+
+/*----------  (Suggested) Project Structure  ----------*/
+
+.
+|-- .git
+|   `-- ...
+|-- config
+|   |-- webpack.config.js
+|   |-- development.config.js
+|   `-- ...
+|-- models
+|   |-- jsore
+|   |   |-- index.js
+|   |   `-- templates.js
+|   |-- BreakRoomRamen
+|   |   |-- index.js
+|   |   |-- common.js
+|   |   `-- tempaltes.js
+|-- routes
+|   |-- controllers     // request managers
+|   |-- middlewares     // request middlewares
+|   `-- routes.js       // define routes and middlewares
+|-- services            // implement external services
+|   `-- ...
+|-- db                  // data access stuff
+|   `-- index.js        // implement Sequalize ORM
+|-- core                // business logic
+|   |-- "accounts.js"   // some example files...
+|   |-- "sales.js"      // ...
+|   |-- "comments.js"   // ...
+|   |-- ...
+|-- utils               // other util libraries (formats, validation, etc)
+|   `-- ...
+|-- tests               // Mocha testing
+|   |-- jsore
+|   |-- BreakRoomRamen
+|   `-- ...
+|-- scripts             // standalone dev scripts...
+|   `-- ...             // be sure to list these inside `npm scripts`
+|-- deploy.js           // deployment automation
+|-- git.ignore
+|-- packagae.json
+|-- package.lock
+|-- README.md
+|-- server.js           // app entry
+
+// revised
+.
+|-- .git
+|   `-- ...
+|-- .gitignore
+|-- breakroomramen
+|   |-- utils               // 2nd leve Postgre access, etc
+|   |   `-- ...
+|   |-- auth
+|   |   `-- ...             // user management
+|   |-- index.js
+|   |-- common.js
+|   `-- templates.js
+|-- jsore
+|   |-- welcome
+|   |   `-- welcome.js
+|   |-- resume
+|   |   `-- resume.js
+|   |-- ramblings
+|   |   |-- utils
+|   |   |   `-- ...         // 2nd leve Postgre access, etc
+|   |   `-- ramblings.js
+|   `-- templates.js
+|-- db                      // top-level Postgres management
+|   `-- ...
+|-- scripts                 // deployment automation
+|   `-- deploy.js
+|-- server.js               // main entry
+|-- package.json
+|-- README.md
+
+
+
+
+
+/*----------  Modules  ----------*/
+
+items with --> * <-- are maybes
+
+Express
+- expose app data
+- manage HTTP requests
+- handle HTTPS security
+- routing API endpoints
+
+Passport *
+- user authentication
+- session management
+    (possible replacement: Axios)
+
+Webpack *
+- production vs development environment management
+- config options handler
+    (possible replacement: PM2)
+
+Mocha
+- unit testing
+
+
+/*----------  Things to look into  ----------*/
+
+Axios module
+- API communication
+- promise based HTTP client (make GET, POST requests)
+- authentication
+- send custom headers
+
+Sequalize module
+- promise based ORM for DB data access
+- manage migrations, queries, transactions, etc
+
+PM2 module
+- prod environment management for Node apps
+
+
 
 
 
