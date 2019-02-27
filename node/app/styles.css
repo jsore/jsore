@@ -3,12 +3,13 @@ body {
     font-family: 'Archivo', sans-serif;
 }
 .container {
-    display: grid;
-    grid-template-rows: auto;
-    /*grid-template-rows: 100%;*/
-    grid-template-columns: auto;
-    /*align-items: center;*/
-    /*justify-items: center;*/
+    /*display: grid;*/
+    /*grid-template-rows: auto;*/
+    /*grid-template-columns: auto;*/
+    position: fixed;
+    top: 150px;
+    width: 100%;
+    height: 100;
 }
 .jsore-main {
     display: grid;
@@ -32,8 +33,8 @@ body {
 
     /** force grid instead of block */
     display: grid;
-    /** there's gonna be two rows in this container */
-    grid-template-rows: 50px 50px;
+    /** there's gonna be three rows in this container */
+    grid-template-rows: 50px 50px 80px;
     /** put the container into middle column */
     grid-column: 2;
     padding: 30px 30px 30px 30px;
@@ -71,4 +72,24 @@ body {
     place-self: center center;
     /** fix the fucky padding issue */
     margin: 0px 0px 0px 0px;
+}
+
+a {
+    color: #888888;
+    text-decoration: none;
+    font-size: 18px;
+}
+a:hover {
+    color: #444444;
+}
+.construction {
+    display: grid;
+    grid-row: 3;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+.construction-text {
+    font-size: 18px;
+    color: #888888;
+    /*text-decoration: none;*/
 }
