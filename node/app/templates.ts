@@ -30,8 +30,9 @@ export const testBody = Handlebars.compile(`
             <p class="construction-text">
                 This site is still under construction.
             </p>
+            <br />
             <!-- <p class="github"> -->
-                <span><a href="https://github.com/jsore">Find me on GitHub for now!</a></span>
+                <span><a href="https://github.com/jsore">Click here to find me on GitHub for now!</a></span>
             <!-- </p> -->
         </div>
     </div>
