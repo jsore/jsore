@@ -170,34 +170,34 @@ absolutely secured. At this time, I'm gonna be paranoid and not publicly detail 
 
 <br>
 
-#### Prerequisites
+### Prerequisites
 
-- <b>Key Node Modules</b>
+<b>Key Node Modules</b>
 
 <i>items with --> * <-- are maybes</i>
 
-<b>Express</b>
+Express
 > - expose app data
 > - manage HTTP requests
 > - handle HTTPS security
 > - routing API endpoints
 
-<b>Passport</b> *
+Passport *
 > - user authentication
 > - session management
 >     (possible replacement: Axios)
 
-<b>Webpack</b> *
+Webpack *
 > - production vs development environment management
 > - config options handler
 >     (possible replacement: PM2)
 
-<b>Mocha</b>
+Mocha
 > - unit testing
 
 <br>
 
-- <b>Keeping the Node application running after server restarts or SSH session exits</b>
+<b>Keeping the Node application running after server restarts or SSH session exits</b>
 
 Webpack is handling restarting ( rebuilding ) the app when a file is updated or
 an error is thrown. It does not, however, handle a ( SSH ) session ending; if the
