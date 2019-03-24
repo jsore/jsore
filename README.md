@@ -168,6 +168,55 @@ absolutely secured. At this time, I'm gonna be paranoid and not publicly detail 
 '-----------------' '----------------------'
 ```
 
+<br>
+
+#### Prerequisites
+
+- <b>Key Node Modules</b>
+
+<i>items with --> * <-- are maybes</i>
+
+<b>Express</b>
+> - expose app data
+> - manage HTTP requests
+> - handle HTTPS security
+> - routing API endpoints
+
+<b>Passport</b> *
+> - user authentication
+> - session management
+>     (possible replacement: Axios)
+
+<b>Webpack</b> *
+> - production vs development environment management
+> - config options handler
+>     (possible replacement: PM2)
+
+<b>Mocha</b>
+> - unit testing
+
+<br>
+
+- <b>Keeping the Node application running after server restarts or SSH session exits</b>
+
+Webpack is handling restarting ( rebuilding ) the app when a file is updated or
+an error is thrown. It does not, however, handle a ( SSH ) session ending; if the
+session is killed all the child processes stemmed from that session are killed as well.
+
+This can be handled two ways:
+
+1) Running the Node process in the background and manaully handling `STDOUT` and
+`STDERR` so that Node won't receive broken pipe errors ( and then crash ) when the
+Node server tries to `console.log` or `error` something to the terminal:
+
+> ```
+> |------ the process to run -----| |---- where to pipe -----|
+> $ node /path/to/project/server.js > stdout.txt 2> stderr.txt &
+>                                                               `-- "run in background"
+> ```
+
+<br>
+
 #### DB Schema
 
 <br><br>
