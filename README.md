@@ -209,11 +209,20 @@ This can be handled two ways:
 `STDERR` so that Node won't receive broken pipe errors ( and then crash ) when the
 Node server tries to `console.log` or `error` something to the terminal:
 
-> ```
-> |------ the process to run -----| |---- where to pipe -----|
-> $ node /path/to/project/server.js > stdout.txt 2> stderr.txt &
->                                                               `-- "run in background"
-> ```
+    ```
+    |------ the process to run -----| |---- where to pipe -----|
+    $ node /path/to/project/server.js > stdout.txt 2> stderr.txt &
+                                                                  `-- "run in background"
+    ```
+
+2) Use PM2: https://github.com/Unitech/pm2
+
+    Install it globally and it's ready to run out of the box
+    ```
+    $ npm install pm2 -g
+    $ pm2 start server.js
+    ```
+
 
 <br>
 
