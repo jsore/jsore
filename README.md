@@ -210,7 +210,9 @@ This can be handled two ways:
 Node server tries to `console.log` or `error` something to the terminal:
 
     ```
-    |------ the process to run -----| |---- where to pipe -----|
+                                      |     pipes new log      |
+                                      |---- messages here -----|
+    |------ the process to run -----| |        instead         |
     $ node /path/to/project/server.js > stdout.txt 2> stderr.txt &
                                                                   `-- "run in background"
     ```
