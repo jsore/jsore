@@ -18,7 +18,7 @@
   "homepage": "https://github.com/jsore/jsore#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "jquery": "^3.3.1",
+    "jquery": ">=3.4.0",
     "morgan": "^1.9.1",
     "nconf": "^0.10.0",
     "nodemon": "^1.18.9",
@@ -27,7 +27,7 @@
     "typeface-archivo-black": "0.0.54"
   },
   "devDependencies": {
-    "bootstrap": "^4.2.1",
+    "bootstrap": ">=4.3.1",
     "css-loader": "^2.1.0",
     "file-loader": "^3.0.1",
     "handlebars": "^4.0.12",
