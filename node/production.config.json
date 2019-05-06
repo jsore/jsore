@@ -1,5 +1,7 @@
 {
-  "privKeyPath": "/etc/letsencrypt/live/jsore.com/privkey.pem",
-  "certificatePath": "/etc/letsencrypt/live/jsore.com/cert.pem",
-  "caPath": "/etc/letsencrypt/live/jsore.com/chain.pem"
+  "serviceUrl": "https://jsore.com",
+  "itsasecret": "*46DEtvB!Bx6",
+  "prodKey": "/etc/letsencrypt/live/jsore.com/privkey.pem",
+  "prodCert": "/etc/letsencrypt/live/jsore.com/cert.pem",
+  "prodCA": "/etc/letsencrypt/live/jsore.com/chain.pem"
 }
