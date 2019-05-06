@@ -4,7 +4,9 @@
   "description": "Jsore.com development",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --ignore './sessions' server.js"
   },
   "repository": {
     "type": "git",

@@ -1,123 +1,80 @@
-/**
- * html/node/server.js
- *
- * PRODUCTION VERSION
- *
- * Entry point for jsore.com
- */
 const fs = require('fs');
-const https = require('https');
 const http = require('http');
-
-const {URL} = require('url');
+const https = require('https');
+const express = require('express');
+const helmet = require('helmet');
 const path = require('path');
+const app = express();
+
+/**
+ * should NODE_ENV be 'development' on local machine???
+ *
+ * ../Pub/jsore/node $ set NODE_ENV=development
+ *
+ * dev-server.js and server-old.js
+ *
+ *  nconf
+ *   .defaults({'conf': path.join(__dirname, `${NODE_ENV}.config.json`)})
+ *   .file(nconf.get('conf'));
+ *
+ * so
+ * ...if NODE_ENV is set on linode server as production
+ * ...if NODE_ENV is set on local macbook as development
+ *   config files = development.config.json, production.config.json
+ *   that's where I'd stick each specific thing I'm wanting, including SSL keys
+ */
 
 
+/** handles and logs current environment */
 const nconf = require('nconf');
 nconf
-    .argv()
-    .env('__')
-    .defaults({'NODE_ENV': 'development'});
+  .argv()
+  .env('__')
+  .defaults({'NODE_ENV': 'development'});
 const NODE_ENV = nconf.get('NODE_ENV');
 const isDev = NODE_ENV === 'development';
 
+/**
+ * server.js is managed and started with pm2
+ * pm2 overwrites this default NODE_ENV when the server is started
+ */
 nconf
-    .defaults({'conf': path.join(__dirname, `${NODE_ENV}.config.json`)})
-    .file(nconf.get('conf'));
+  .defaults({'conf': path.join(__dirname, `${NODE_ENV}.config.json`)})
+  .file(nconf.get('conf'));
 
 
-//const serviceUrl = 'https://jsore.com';
-const serviceUrl = new URL(nconf.get('serviceUrl'));
-//const servicePort = 443;
-const servicePort =
-    serviceUrl.port || (serviceUrl.protocol === 'https:' ? 443 : 80);
-
-const express = require('express');
-/** HTTP logger */
-const morgan = require('morgan');
-
-
-const app = express();
-
-
-
-
-const httpsOptions = {
-    /** TODO: move this to nconf */
-    key: fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem'),
+//const privKey = fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem', 'utf8');
+//const certificate = fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem', 'utf8');
+//const ca = fs.readFileSync('/etc/letsencrypt/live/jsore.com/chain.pem', 'utf8');
+const privKey = fs.readFileSync(`${nconf.get('privKeyPath')}`, 'utf8');
+const certificate = fs.readFileSync(`${nconf.get('certificatePath')}`, 'utf8');
+const ca = fs.readFileSync(`${nconf.get('caPath')}`, 'utf8');
+const creds = {
+    key: privKey,
+    cert: certificate,
+    ca: ca
 };
 
 
-app.use(morgan('dev'));
+app.use((req, res) => {
+    res.send('hello');
+});
+app.use(helmet()); /** further HTTPS sanitation */
+//app.use('/', someMiddleware());
+//app.use('/', aDifferentMiddleware());
+//app.use((req, res) => {
+//    res.writeHead(200);
+//    res.end("hi there");
+//});
 
-
-
-if (isDev) {
-    const webpack = require('webpack');
-    const webpackMiddleware = require('webpack-dev-middleware');
-    const webpackConfig = require('./webpack.config.js');
-    app.use(webpackMiddleware(webpack(webpackConfig), {
-        publicPath: '/',
-        stats: {colors: true},
-    }));
-} else {
-    // prod
-}
-//    const webpack = require('webpack');
-//    const webpackMiddleware = require('webpack-dev-middleware');
-//    const webpackConfig = require('./webpack.config.js');
-//    app.use(webpackMiddleware(webpack(webpackConfig), {
-//        publicPath: '/',
-//        stats: {colors: true},
-//    }));
-//
-
-
-
-
-
-/** basic helper func to test connectivity */
-app.get('/hello/:name', (req, res) => {
-    res.status(200).json({'hello': req.params.name});
+const httpsServer = https.createServer(creds, app);
+httpsServer.listen(443, () => {
+    console.log('https running');
+    console.log(`${NODE_ENV}`);
 });
 
-app.get('/', (req, res) => {
-    res.send('working');
-});
-//app.use(require('./lib/bundle.js'));
-
-
-/**
- * www.jsore.com >> jsore.com redirect
- */
-//const wwwRedirect = (req, res, next) => {
-//    if (req.headers.host.slice(0, 4) === 'www.') {
-//        const cleanHost = req.headers.host.slice(4);
-//        return res.redirect(301, req.protocol + '://' + cleanHost + req.originalUrl);
-//    }
-//    next();
-//};
-//app.set('trust proxy', true);
-//app.use(wwwRedirect);
-
-
-https.createServer(httpsOptions, app)
-    .listen(443, () => console.log('https ready'));
-
-
-/**
- * http >> https redirect
- *
- * this is replacing my Apache <virtualhost> options since
- *   I'm not using Apache at all on this project
- */
-http.createServer((req, res) => {
+/** for HTTP redirect >> HTTPS */
+const httpServer = http.createServer((req, res) => {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.end();
-}).listen(80, () => console.log('http ready'));
-
-
-
-//app.use('/api');
-//app.listen(443, () => console.log('app.listen ready'));
+}).listen(80, () => console.log('http server running puerly for redirect to https'));

@@ -1,0 +1,5 @@
+{
+  "privKeyPath": "/etc/letsencrypt/live/jsore.com/privkey.pem",
+  "certificatePath": "/etc/letsencrypt/live/jsore.com/cert.pem",
+  "caPath": "/etc/letsencrypt/live/jsore.com/chain.pem"
+}
