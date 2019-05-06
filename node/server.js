@@ -54,7 +54,8 @@ app.use(helmet()); /** further HTTPS sanitation */
 
 
 /** start managing user sessions */
-//const expressSession = require('express-session');    // need to npm install
+const expressSession = require('express-session');
+const parseurl = require('parseurl');
 
 /** handles switch between prod/dev environments */
 let creds = {};
@@ -65,18 +66,30 @@ if (isDev) {
   creds = { key: devKey, cert: devCert };
 
   /** user session management */
-  /** future feature */
-  ///** pull in FileStore class from expressSession */
-  //const FileStore = require('session-file-store')(expressSession);  // need to npm install
-  ///** change secret to kick all current user sessions */
-  //app.use(expressSession({
-  //  /** don't save for each request */
-  //  resave: false,
-  //  /** save new unmodified sessions? yes, we want all session data */
-  //  saveUninitialized: true,
-  //  secret: nconf.get('itsasecret'),
-  //  store: new FileStore();
-  //}));
+
+  /** pull in FileStore class from expressSession */
+  const FileStore = require('session-file-store')(expressSession);  // need to npm install
+  /** change secret to kick all current user sessions */
+  app.use(expressSession({  // https://github.com/expressjs/session
+    /** don't save for each request */
+    resave: false,
+    /** save new unmodified sessions? yes, we want all session data */
+    saveUninitialized: true,
+    secret: nconf.get('itsasecret'),
+    //cookie: { secure: true },
+    store: new FileStore()  // stores in ./sessions
+  }));
+
+  app.use((req, res, next) => {
+    if (!req.session.views) {
+      req.session.views = {}
+    }
+    //const hashlink = parseurl(req).hash;
+    const pathname = parseurl(req).pathname;
+    //req.session.views[hashlink] = (req.session.views[hashlink] || 0) + 1;
+    req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
+    next();
+  });
 
 
   /** serve webpack package */
@@ -123,11 +136,16 @@ if (isDev) {
 //  // show resume;
 //});
 
+//app.get('/', (req, res) => {
+//  res.send('viewed ', req.session.views['/#welcome'], ' times');
+//});
+
 
 const httpsServer = https.createServer(creds, app);
-httpsServer.listen(443, () => {
+httpsServer.listen(443, (req, res) => {
     console.log('HTTPS server running');
     console.log(`Environment: "${NODE_ENV}": "${isDev}"`);
+    //console.log('viewed ', req.session.views['/#welcome'], ' times');
 });
 
 /** for HTTP redirect >> HTTPS */
