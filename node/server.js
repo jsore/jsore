@@ -38,8 +38,18 @@ nconf
   .defaults({'conf': path.join(__dirname, `${NODE_ENV}.config.json`)})
   .file(nconf.get('conf'));
 
+//let prodKey = fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem', 'utf8');
+//let prodCert = fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem', 'utf8');
+//let prodCA = fs.readFileSync('/etc/letsencrypt/live/jsore.com/chain.pem', 'utf8');
+//let creds = { key: prodKey, cert: prodCert, ca: prodCA };
+
+let prodKey = '';
+let prodCert = '';
+let prodCa = '';
+let creds = {};
 
 const baseURL = new URL(nconf.get('serviceUrl'));
+//const baseURL = 'localhost';
 //const servicePort = baseUrl.port || (serviceUrl.protocol === 'https:' ? 443 : 80);
 
 
@@ -50,7 +60,7 @@ const baseURL = new URL(nconf.get('serviceUrl'));
 //});
 
 app.use(morgan('dev'));
-app.use(helmet()); /** further HTTPS sanitation */
+//app.use(helmet()); /** further HTTPS sanitation */
 
 
 /** start managing user sessions */
@@ -58,11 +68,12 @@ const expressSession = require('express-session');
 const parseurl = require('parseurl');
 
 /** handles switch between prod/dev environments */
-let creds = {};
-if (isDev) {
+//let creds = {};
+if (isDev === 'development') {
   const devKey = fs.readFileSync(`${nconf.get('devKey')}`, 'utf8');
   const devCert = fs.readFileSync(`${nconf.get('devCert')}`, 'utf8');
   /** CA managed by env variable */
+  creds = {};
   creds = { key: devKey, cert: devCert };
 
   /** user session management */
@@ -92,23 +103,36 @@ if (isDev) {
   });
 
 
-  /** serve webpack package */
-  const webpack = require('webpack');
-  /** serve from memory via Express */
-  const webpackMiddleware = require('webpack-dev-middleware');
-  /** $ webpack --mode development local, production on server */
-  const webpackConfig = require('./webpack.config.js');
-  app.use(webpackMiddleware(webpack(webpackConfig), {
-    // mode: 'development',
-    publicPath: '/',
-    stats: {colors: true},
-  }));
+  // /** serve webpack package */
+  // const webpack = require('webpack');
+  // /** serve from memory via Express */
+  // const webpackMiddleware = require('webpack-dev-middleware');
+  // //* $ webpack --mode development local, production on server
+  // const webpackConfig = require('./webpack.config.js');
+  // app.use(webpackMiddleware(webpack(webpackConfig), {
+  //   // mode: 'development',
+  //   publicPath: '/',
+  //   stats: {colors: true},
+  // }));
 
 } else {
-  const prodKey = fs.readFileSync(`${nconf.get('privKeyPath')}`, 'utf8');
-  const prodCert = fs.readFileSync(`${nconf.get('certificatePath')}`, 'utf8');
-  const prodCA = fs.readFileSync(`${nconf.get('caPath')}`, 'utf8');
-  const creds = { key: prodKey, cert: prodCert, ca: prodCA };
+  prodKey = fs.readFileSync(`${nconf.get('prodKey')}`, 'utf8');
+  prodCert = fs.readFileSync(`${nconf.get('prodCert')}`, 'utf8');
+  prodCA = fs.readFileSync(`${nconf.get('prodCA')}`, 'utf8');
+  creds = { key: prodKey, cert: prodCert, ca: prodCA };
+  //const prodKey = fs.readFileSync(`${nconf.get('prodKey')}`, 'utf8');
+  //const prodCert = fs.readFileSync(`${nconf.get('prodCert')}`, 'utf8');
+  //const prodCA = fs.readFileSync(`${nconf.get('prodCA')}`, 'utf8');
+
+  //const prodKey = fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem', 'utf8');
+  //const prodCert = fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem', 'utf8');
+  //const prodCA = fs.readFileSync('/etc/letsencrypt/live/jsore.com/chain.pem', 'utf8');
+
+  //prodKey = fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem', 'utf8');
+  //prodCert = fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem', 'utf8');
+  //prodCA = fs.readFileSync('/etc/letsencrypt/live/jsore.com/chain.pem', 'utf8');
+  //creds = { key: prodKey, cert: prodCert, ca: prodCA };
+
 
   /** user session management for prod (express has memory leaks) */
   /** future feature */
@@ -131,7 +155,17 @@ if (isDev) {
   app.use(express.static('dist'));
 };
 
-
+/** serve webpack package */
+  const webpack = require('webpack');
+  /** serve from memory via Express */
+  const webpackMiddleware = require('webpack-dev-middleware');
+  //* $ webpack --mode development local, production on server
+  const webpackConfig = require('./webpack.config.js');
+  app.use(webpackMiddleware(webpack(webpackConfig), {
+    // mode: 'development',
+    publicPath: '/',
+    stats: {colors: true},
+  }));
 //app.get('/resume', (req, res) => {
 //  // show resume;
 //});
@@ -144,12 +178,62 @@ if (isDev) {
 const httpsServer = https.createServer(creds, app);
 httpsServer.listen(443, (req, res) => {
     console.log('HTTPS server running');
-    console.log(`Environment: "${NODE_ENV}": "${isDev}"`);
+    console.log(`Environment: "${NODE_ENV}"\nWhich means isDev = "${isDev}"`);
     //console.log('viewed ', req.session.views['/#welcome'], ' times');
 });
+//const httpsServer = https.createServer(creds, app);
+//httpsServer.listen(3001, (req, res) => {
+//    console.log('HTTPS server running');
+//    console.log(`Environment: "${NODE_ENV}"\nWhich means isDev = "${isDev}"`);
+//    //console.log('viewed ', req.session.views['/#welcome'], ' times');
+//});
+
 
 /** for HTTP redirect >> HTTPS */
 const httpServer = http.createServer((req, res) => {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-    res.end();
+    res.end('Redirecting to HTTPS...');
+
+    //res.end('test');
 }).listen(80, () => console.log('HTTP server up for HTTPS redirects'));
+//const httpServer = http.createServer((req, res) => {
+//    res.writeHead(200);
+//    res.end('test');
+//    //res.send('hi');
+//}).listen(3001, () => console.log('HTTP server up for SSL testing'));
+
+
+
+
+
+
+
+
+
+// // why the fuck does this work
+// const fs = require('fs');
+// const http = require('http');
+// const https = require('https');
+// const express = require('express');
+// const app = express();
+// const prodKey = fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem', 'utf8');
+//   const prodCert = fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem', 'utf8');
+//   const prodCA = fs.readFileSync('/etc/letsencrypt/live/jsore.com/chain.pem', 'utf8');
+//   const creds = { key: prodKey, cert: prodCert, ca: prodCA };
+// app.get('/', (req, res) => {
+//   res.send('yup');
+// });
+// const httpsServer = https.createServer(creds, app);
+// httpsServer.listen(443, (req, res) => {
+//     //res.writeHead(200);
+//     console.log('HTTPS server running');
+//     //res.end('test');
+//     //console.log(`Environment: "${NODE_ENV}"\nWhich means isDev = "${isDev}"`);
+//     //console.log('viewed ', req.session.views['/#welcome'], ' times');
+// });
+// const httpServer = http.createServer((req, res) => {
+//     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+//     res.end('Redirecting to HTTPS...');
+
+//     //res.end('test');
+// }).listen(80, () => console.log('HTTP server up for HTTPS redirects'));
