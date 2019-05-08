@@ -2,85 +2,60 @@
  * __dirname/node/server.js
  *
  * handles server management
+ *
+ * $ NODE_ENV=<development> npm start
+ * $ pm2 start
+ * $ pm2 start npm -- start
  */
 
-/**
- * ..notes/node-js/project-files/fortify/B4/server.js
- */
 
-/** bring in most of our shit in */
+/** bring most of our shit in */
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
 const path = require('path');
-/** web application context */
-const express = require('express');
-/** further https sanitization */
-const helmet = require('helmet');
-/** url parsing */
-const {URL} = require('url');
-/** app settings */
-const nconf = require('nconf');
-/** get/post logger */
-const morgan = require('morgan');
-/** global inits */
-const app = express();
+const express = require('express');   /** web application context */
+const helmet = require('helmet');     /** further https sanitization */
+const {URL} = require('url');         /** url parsing */
+const nconf = require('nconf');       /** app settings */
+const morgan = require('morgan');     /** HTTP logger */
+const app = express();                /** global context init */
 
 
-/** detect current environment */
+/** detect env and set name of config file */
 nconf.argv().env('__').defaults({'NODE_ENV': 'development'});
 const NODE_ENV = nconf.get('NODE_ENV');
 const isDev = NODE_ENV === 'development';
-
-
-/** pm2 overwrites this default on startup in prod */
 nconf
   .defaults({'conf': path.join(__dirname, `${NODE_ENV}.config.json`)})
   .file(nconf.get('conf'));
 
-//let prodKey = fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem', 'utf8');
-//let prodCert = fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem', 'utf8');
-//let prodCA = fs.readFileSync('/etc/letsencrypt/live/jsore.com/chain.pem', 'utf8');
-//let creds = { key: prodKey, cert: prodCert, ca: prodCA };
 
 /**
- * these were originally declared and set within the isDev
- * if/else block
+ * these were originally declared and set within the truth-y
+ * isDev if statement
  *
- * I apparently did not remember what scope was, until I
- * tried starting my server in production
- *
- * chrome freaked out about the authenticity of my SSL keys
+ * I apparently did not remember what scope was, until trying
+ * to start my server in production and causing chrome to
+ * freak out about the authenticity of my SSL keys ( it was
+ * of course not able to match key=CA because no access )
  *
  * after an entire day of debugging and creating/trashing
  * new SSL certs for my domain, this fixed the issue
  */
-let prodKey = '';
-let prodCert = '';
-let prodCa = '';
-let creds = {};
-/**
- * renews through a cronjob, once a month, 1st day of month
- * $ crontab -e    # remember: results are one-liners
- * > 0 0 1 * * certbot renew
- * > --standalone
- * > --pre-hook "pm2 stop server"
- * > --post-hook "pm2 start server"
- */
+let prodKey = '';     // a note on my SSL certs so that I don't forget to remember
+let prodCert = '';    // renews through a cronjob, once a month, 1st day of month
+let prodCa = '';      //
+let creds = {};       // $ crontab -e
 
+
+/** use and log everything at this url */
 const baseURL = new URL(nconf.get('serviceUrl'));
-//const baseURL = 'localhost';
-//const servicePort = baseUrl.port || (serviceUrl.protocol === 'https:' ? 443 : 80);
-
-
-/** for sanity checking w/o webpack */
-//app.use((req, res) => {
-//  res.writeHead(200);
-//  res.end('hello');
-//});
-
 app.use(morgan('dev'));
-//app.use(helmet()); /** further HTTPS sanitation */
+
+
+/** sanitize HTTP headers sent by Express */
+app.use(helmet());
 
 
 /** start managing user sessions */
@@ -88,8 +63,10 @@ const expressSession = require('express-session');
 const parseurl = require('parseurl');
 
 
-if (isDev === 'development') {
-  /** if NODE_ENV is set to 'development'... */
+/** if NODE_ENV is set to 'development'... */
+if (isDev) {
+  /** ...use 'development.config.json' */
+  /** mkcert keys */
   const devKey = fs.readFileSync(`${nconf.get('devKey')}`, 'utf8');
   const devCert = fs.readFileSync(`${nconf.get('devCert')}`, 'utf8');
   /** CA managed by env variable */
@@ -97,66 +74,24 @@ if (isDev === 'development') {
   creds = { key: devKey, cert: devCert };
 
   /** user session management */
-
-  /** pull in FileStore class from expressSession */
-  const FileStore = require('session-file-store')(expressSession);  // need to npm install
-  /** change secret to kick all current user sessions */
-  app.use(expressSession({  // https://github.com/expressjs/session
-    /** don't save for each request */
-    resave: false,
-    /** save new unmodified sessions? yes, we want all session data */
-    saveUninitialized: true,
+  const FileStore = require('session-file-store')(expressSession);
+  app.use(expressSession({
+    resave: false,                    /** don't save for each request */
+    saveUninitialized: true,          /** save unmodified sessions */
     secret: nconf.get('itsasecret'),
-    //cookie: { secure: true },
-    store: new FileStore()  // stores in ./sessions
+    store: new FileStore()            /** stores in ./sessions */
   }));
-
-  app.use((req, res, next) => {
-    if (!req.session.views) {
-      req.session.views = {}
-    }
-    //const hashlink = parseurl(req).hash;
-    const pathname = parseurl(req).pathname;
-    //req.session.views[hashlink] = (req.session.views[hashlink] || 0) + 1;
-    req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
-    next();
-  });
-
-
-  // /** serve webpack package */
-  // const webpack = require('webpack');
-  // /** serve from memory via Express */
-  // const webpackMiddleware = require('webpack-dev-middleware');
-  // //* $ webpack --mode development local, production on server
-  // const webpackConfig = require('./webpack.config.js');
-  // app.use(webpackMiddleware(webpack(webpackConfig), {
-  //   // mode: 'development',
-  //   publicPath: '/',
-  //   stats: {colors: true},
-  // }));
 
 } else {
   /**
-   * ...else PM2 is handling overwrite of NODE_ENV to 'production'
-   * to manually run this: $ NODE_ENV=production npm start
+   * ...else PM2 is handling this app's instance
+   * - run with $ pm2 start
+   * - overwrites NODE_ENV to 'production' ( ecosystem.config.js )
    */
   prodKey = fs.readFileSync(`${nconf.get('prodKey')}`, 'utf8');
   prodCert = fs.readFileSync(`${nconf.get('prodCert')}`, 'utf8');
   prodCA = fs.readFileSync(`${nconf.get('prodCA')}`, 'utf8');
   creds = { key: prodKey, cert: prodCert, ca: prodCA };
-  //const prodKey = fs.readFileSync(`${nconf.get('prodKey')}`, 'utf8');
-  //const prodCert = fs.readFileSync(`${nconf.get('prodCert')}`, 'utf8');
-  //const prodCA = fs.readFileSync(`${nconf.get('prodCA')}`, 'utf8');
-
-  //const prodKey = fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem', 'utf8');
-  //const prodCert = fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem', 'utf8');
-  //const prodCA = fs.readFileSync('/etc/letsencrypt/live/jsore.com/chain.pem', 'utf8');
-
-  //prodKey = fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem', 'utf8');
-  //prodCert = fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem', 'utf8');
-  //prodCA = fs.readFileSync('/etc/letsencrypt/live/jsore.com/chain.pem', 'utf8');
-  //creds = { key: prodKey, cert: prodCert, ca: prodCA };
-
 
   /** user session management for prod (express has memory leaks) */
   /** future feature */
@@ -174,25 +109,26 @@ if (isDev === 'development') {
   //  }),
   //}));
 
-
   /** serve webpack package */
   app.use(express.static('dist'));
 };
 
+
 /** serve webpack package */
   const webpack = require('webpack');
-  /** serve from memory via Express */
   const webpackMiddleware = require('webpack-dev-middleware');
-  //* $ webpack --mode development local, production on server
   const webpackConfig = require('./webpack.config.js');
   app.use(webpackMiddleware(webpack(webpackConfig), {
     // mode: 'development',
     publicPath: '/',
-    stats: {colors: true},
+    stats: 'errors-only',
   }));
+
+
 //app.get('/resume', (req, res) => {
 //  // show resume;
 //});
+
 
 //app.get('/', (req, res) => {
 //  res.send('viewed ', req.session.views['/#welcome'], ' times');
@@ -203,61 +139,12 @@ const httpsServer = https.createServer(creds, app);
 httpsServer.listen(443, (req, res) => {
     console.log('HTTPS server running');
     console.log(`Environment: "${NODE_ENV}"\nWhich means isDev = "${isDev}"`);
-    //console.log('viewed ', req.session.views['/#welcome'], ' times');
 });
-//const httpsServer = https.createServer(creds, app);
-//httpsServer.listen(3001, (req, res) => {
-//    console.log('HTTPS server running');
-//    console.log(`Environment: "${NODE_ENV}"\nWhich means isDev = "${isDev}"`);
-//    //console.log('viewed ', req.session.views['/#welcome'], ' times');
-//});
 
 
 /** for HTTP redirect >> HTTPS */
 const httpServer = http.createServer((req, res) => {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.end('Redirecting to HTTPS...');
-
-    //res.end('test');
 }).listen(80, () => console.log('HTTP server up for HTTPS redirects'));
-//const httpServer = http.createServer((req, res) => {
-//    res.writeHead(200);
-//    res.end('test');
-//    //res.send('hi');
-//}).listen(3001, () => console.log('HTTP server up for SSL testing'));
 
-
-
-
-
-
-
-
-
-// // why the fuck does this work
-// const fs = require('fs');
-// const http = require('http');
-// const https = require('https');
-// const express = require('express');
-// const app = express();
-// const prodKey = fs.readFileSync('/etc/letsencrypt/live/jsore.com/privkey.pem', 'utf8');
-//   const prodCert = fs.readFileSync('/etc/letsencrypt/live/jsore.com/cert.pem', 'utf8');
-//   const prodCA = fs.readFileSync('/etc/letsencrypt/live/jsore.com/chain.pem', 'utf8');
-//   const creds = { key: prodKey, cert: prodCert, ca: prodCA };
-// app.get('/', (req, res) => {
-//   res.send('yup');
-// });
-// const httpsServer = https.createServer(creds, app);
-// httpsServer.listen(443, (req, res) => {
-//     //res.writeHead(200);
-//     console.log('HTTPS server running');
-//     //res.end('test');
-//     //console.log(`Environment: "${NODE_ENV}"\nWhich means isDev = "${isDev}"`);
-//     //console.log('viewed ', req.session.views['/#welcome'], ' times');
-// });
-// const httpServer = http.createServer((req, res) => {
-//     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-//     res.end('Redirecting to HTTPS...');
-
-//     //res.end('test');
-// }).listen(80, () => console.log('HTTP server up for HTTPS redirects'));

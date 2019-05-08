@@ -1,15 +1,17 @@
 module.exports = {
   apps : [{
     name: 'server',
-    // maybe?
-    // script: 'nodemon server.js',
+    // what to launch
     script: 'server.js',
-
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
+    // args to pass to script
     args: 'one two',
     instances: 1,
     autorestart: true,
+    //Enable or disable the watch mode
     watch: false,
+    //Object that will be used as an options with chokidar (refer to chokidar documentation)
+    //watch_options: { },
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'production'
