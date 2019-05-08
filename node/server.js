@@ -43,10 +43,30 @@ nconf
 //let prodCA = fs.readFileSync('/etc/letsencrypt/live/jsore.com/chain.pem', 'utf8');
 //let creds = { key: prodKey, cert: prodCert, ca: prodCA };
 
+/**
+ * these were originally declared and set within the isDev
+ * if/else block
+ *
+ * I apparently did not remember what scope was, until I
+ * tried starting my server in production
+ *
+ * chrome freaked out about the authenticity of my SSL keys
+ *
+ * after an entire day of debugging and creating/trashing
+ * new SSL certs for my domain, this fixed the issue
+ */
 let prodKey = '';
 let prodCert = '';
 let prodCa = '';
 let creds = {};
+/**
+ * renews through a cronjob, once a month, 1st day of month
+ * $ crontab -e    # remember: results are one-liners
+ * > 0 0 1 * * certbot renew
+ * > --standalone
+ * > --pre-hook "pm2 stop server"
+ * > --post-hook "pm2 start server"
+ */
 
 const baseURL = new URL(nconf.get('serviceUrl'));
 //const baseURL = 'localhost';
@@ -67,9 +87,9 @@ app.use(morgan('dev'));
 const expressSession = require('express-session');
 const parseurl = require('parseurl');
 
-/** handles switch between prod/dev environments */
-//let creds = {};
+
 if (isDev === 'development') {
+  /** if NODE_ENV is set to 'development'... */
   const devKey = fs.readFileSync(`${nconf.get('devKey')}`, 'utf8');
   const devCert = fs.readFileSync(`${nconf.get('devCert')}`, 'utf8');
   /** CA managed by env variable */
@@ -116,6 +136,10 @@ if (isDev === 'development') {
   // }));
 
 } else {
+  /**
+   * ...else PM2 is handling overwrite of NODE_ENV to 'production'
+   * to manually run this: $ NODE_ENV=production npm start
+   */
   prodKey = fs.readFileSync(`${nconf.get('prodKey')}`, 'utf8');
   prodCert = fs.readFileSync(`${nconf.get('prodCert')}`, 'utf8');
   prodCA = fs.readFileSync(`${nconf.get('prodCA')}`, 'utf8');
