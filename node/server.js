@@ -19,6 +19,8 @@ const helmet = require('helmet');     /** further https sanitization */
 const {URL} = require('url');         /** url parsing */
 const nconf = require('nconf');       /** app settings */
 const morgan = require('morgan');     /** HTTP logger */
+
+
 const app = express();                /** global context init */
 
 
@@ -123,16 +125,6 @@ if (isDev) {
     publicPath: '/',
     stats: 'errors-only',
   }));
-
-
-//app.get('/resume', (req, res) => {
-//  // show resume;
-//});
-
-
-//app.get('/', (req, res) => {
-//  res.send('viewed ', req.session.views['/#welcome'], ' times');
-//});
 
 
 const httpsServer = https.createServer(creds, app);
