@@ -1,31 +1,33 @@
-# An Example Development Lifecycle
+# Node.js Based Website With NGINX Reverse Proxy & Elasticsearch
 
-Why build something in a manner that <i>doesn't</i> allow you to learn while you build?
+These are my general notes on launching, maintaining and refactoring a website for publishing technical/How-To articles.
 
-When I make something, I want to make sure it's made properly. To do that, I believe you need
-to take a step back, get the fuck out of whatever framework you're using, then learn what's
-happening behind doors. Of course, totally escaping 'user land' is physically just not
-possible, I'm aiming to do as much as I can to just.....understand.
+Currently undergoing a complete refactoring of the entire structure - starting fresh with a new server to clean up services and packages that aren't being used by the application but are still installed, also with a clearer separation of concerns for the entire project, moving DNS/MX/personal file DB across isolated servers.
 
-Yes, there are different ways of doing things.
-
-Yes, I want to learn them.
-
-Yes, I'm trying to.
-
-And, yes, I'm going to document what I learn, in my words, <b>in the hopes that it may help
-anyone else</b>.
-
-My site - `jsore.com` - is a simple portfolio/blogging site I've decided to make, but packed with
-technologies and created with an original mindset that I wanted to make this an opportunity to
-really get my hands dirty with Node. Purposfully not being a simple place where some static files
-get served, as is common with these kinds of sites.
-
-Further, to account for the future implementation of a side-project, Break Room Ramen, a web app
-I'll be creating for me and a few buddies to review unique flavors of ramen, this is gonna be a bit
-overly fleshed out and thought through.
+<br><br>
 
 
+
+--------------------------------------------------------------------------------
+### What It Should Accomplish
+
+- [ ] Serve a technical portfolio, resume and wiki articles to interested parties
+    - [ ] ...with a good UX and intuitive UI
+    - [ ] ...
+
+
+<br><br>
+
+
+
+--------------------------------------------------------------------------------
+### Goals & Milestones
+
+- [ ]
+
+<details>
+
+<summary>v1 Notes & Environment</summary>
 
 <br><br>
 <hr>
@@ -404,4 +406,5 @@ http: https://nodejs.org/api/http.html#http_http_request_options_callback
 <br><br>
 <hr>
 
-## TODO
+</details>
+
