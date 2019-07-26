@@ -1,8 +1,0 @@
-node_modules/
-
-# pm2 settings
-ecosystem.config.json
-# dev session files
-sessions
-# dynamic package files
-dist/
