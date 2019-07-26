@@ -9,7 +9,7 @@ const morgan = require('morgan');
 const http = require('http');
 const fs = require('fs');
 // const path = require('path');
-const port = 8181;
+
 
 const app = express();
 app.use(morgan('dev'));
@@ -26,8 +26,16 @@ app.get('/', function(req, res) {
   res.end();
 });
 
+let port;
+
+if (process.env.CURRENT_ENVIRONMENT === 'dev') {
+  port = 8282;
+} else {
+  port = 8181;
+}
+
 app.listen(port, () => {
-  console.log('jsore running on 8181');
+  console.log(`jsore running on port ${port}`);
 });
 
 // nodemon test

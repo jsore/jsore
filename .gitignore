@@ -2,3 +2,5 @@ tmp/*
 v1/*
 *error.log
 .DS_Store
+envs/*
+node_modules/*

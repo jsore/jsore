@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "monitor": "pm2 monit",
-    "serve:fresh": "pm2 start index.js --name 'jsore'",
-    "serve:overwrite": "yarn run serve:stop && pm2 delete jsore && pm2 start index.js --name 'jsore'",
+    "serve:fresh": "dotenv -e envs/.env pm2 start -- index.js --name 'jsore'",
+    "serve:overwrite": "yarn run serve:stop && pm2 delete jsore && dotenv -e envs/.env pm2 start -- index.js --name 'jsore'",
     "serve:stop": "pm2 stop jsore",
     "watch:existing": "nodemon --watch dist/index.html --watch dist/styles.css --watch index.js --exec yarn run serve:overwrite"
   },
@@ -17,9 +17,12 @@
   "author": "Justin Sorensen <justin@jsore.com> (https://jsore.com)",
   "license": "ISC",
   "nodemonConfig": {
-    "ignore": ["node_modules/*"]
+    "ignore": [
+      "node_modules/*"
+    ]
   },
   "devDependencies": {
+    "dotenv-cli": "^2.0.1",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "pm2": "^3.5.1"
