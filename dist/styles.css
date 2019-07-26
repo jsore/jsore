@@ -1,0 +1,119 @@
+body {
+  font-family: 'Archive', sans-serif;
+  background-color: rgb(217, 217, 217);
+  line-height: 1.3;
+  padding: 3px 3px 0 3px;
+  margin: 0px 0px 0px 0px;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+.jsore-main {
+  display: grid;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+.parent {
+  display: grid;
+  height: 100%;
+  text-align: center;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+.bio {
+  background-color: white;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  place-self: center center;
+  width: 100%;
+  height: 100%;
+}
+.bio-name {
+  display: grid;
+  grid-column: 1;
+  width: auto;
+  height: 100%;
+  align-content: start;
+  text-align: left;
+  color: #444444;
+  padding: 0px 40px 0 40px;
+  place-self: start start;
+  border-right: 1px solid #d9d9d9;
+  /* two box shaddows, 2nd with more blur and opacity */
+  box-shadow: 0 5px 10px rgba(154, 160, 185, .1), 0 15px 40px rgba(166, 173, 201, .3);
+  /*transition: all .3s ease;*/
+}
+.bio-name:hover {
+  box-shadow: 0 5px 10px rgba(154, 160, 185, .3), 0 15px 40px rgba(166, 173, 201, .5);
+}
+h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 20px;
+}
+.bio-background, .bio-text {
+  font-size: 1.20rem;
+  color: #8c8c8c;
+  font-weight: 500;
+  place-self: start start;
+  letter-spacing: 0.5px;
+}
+.bio-text {
+  display: grid;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+kbd {
+  /*position: fixed;*/
+  /*bottom: 10%;*/
+  font-weight: 200;
+  color: #999999;
+  font-size: 1.15rem;
+  margin-top: 40px;
+  display: grid;
+  place-self: start start;
+}
+a {
+  color: #222222;
+  text-decoration: underline;
+  text-decoration-skip-ink: auto;
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+a:visited {
+  text-decoration: underline;
+}
+a:hover {
+  /*color: #8c8c8c;*/
+  text-decoration: none;
+}
+.construction {
+  display: grid;
+  grid-column: 2;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  width: 100%;
+  align-content: center;
+  text-align: left;
+}
+.construction-text {
+  color: #444444;
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin: 1rem 0px 1rem 0px;
+  letter-spacing: 0.5px;
+  transition: all .3s ease;
+}
+.construction-text:hover {
+  /*text-shadow: 0 5px 10px rgba(154, 160, 185, .1), 0 15px 40px rgba(166, 173, 201, .3);*/
+  /*text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;*/
+  text-shadow: 0 5px 10px #bfbfbf, 0 15px 40px #e6e6e6;
+}
