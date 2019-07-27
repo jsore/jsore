@@ -1,4 +1,4 @@
-# Node.js Based Website With NGINX Reverse Proxy & Elasticsearch
+# Website on Node.js With NGINX Reverse Proxy, Elasticsearch & Docker
 
 These are my general notes on launching, maintaining and refactoring a website for publishing technical/How-To articles.
 
