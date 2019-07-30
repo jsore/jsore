@@ -26,17 +26,8 @@ app.get('/', function(req, res) {
   res.end();
 });
 
-let port;
-
-if (process.env.CURRENT_ENVIRONMENT === 'dev') {
-  port = 8282;
-} else {
-  port = 8181;
-}
+const port = process.env.SERVER_PORT;
 
 app.listen(port, () => {
   console.log(`jsore running on port ${port}`);
 });
-
-// nodemon test
-// test 2
