@@ -25,6 +25,8 @@ Currently undergoing a complete refactoring of the entire structure - starting f
 
 - [ ]
 
+
+<br><br>
 <details>
 
 <summary>v1 Notes & Environment</summary>
