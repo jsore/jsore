@@ -21,9 +21,32 @@ Currently undergoing a complete refactoring of the entire structure - starting f
 
 
 --------------------------------------------------------------------------------
-### Goals & Milestones
+### Current Status
 
-- [ ]
+Old machine is decommissioned, files backed up locally, decision on further action to take with it and what to do with it is still pending. New machine is running, NGINX is handling reverse proxy'ing from protected ports to background servers listening on ephemeral ports.
+
+User management API has been developed but not implemented into the main site. The API is Node.js and Express based, uses an Elasticsearch DB for user profile and credential storage, transpiled with Babel, managed by PM2 and fully adherent to MVC. All Unit, Feature and End-To-End tests passing & meet all spec's. Clients should be able to create, delete, retrieve or search for a user and have the option of creating a profile, replacing the profile ( complete overwrite ) or updating a profile ( partial overwrite ).
+
+The main site, the portfolio, points to a splash page while a final portfolio is being developed locally. The portfolio is Node.js and Express based, SSL secured with local development environment completely mirrored, including proper SSL over localhost.
+
+Version control for all services with Git. DNS is being temporarily managed by Linode instead of being self managed while I focus on producing content for prospective employers to review. Mail is also being handled by Fastmail, temporarily, but I've implemented SPF/DKIM/DMARC. LinkedIn profile has been updated, resume has been updated and will eventually be served on the portfolio and made available for direct download for interested parties.
+
+<br>
+
+Immediately impending updates:
+
+- [ ] CI & CD with Travis CI and Jenkins build automation
+- [ ] Docker containerization
+- [ ] Kubernetes
+- [ ] jsore.com/articles
+- [ ] Template for articles
+
+<br>
+
+As mentioned, this is a personal project; these are simply my notes, this specific section being a summary of what I've rolled out in the past week as a sanity check for myself.
+
+
+
 
 
 <br><br>
