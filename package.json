@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "monitor": "pm2 monit",
-    "serve:fresh": "dotenv -e envs/.env pm2 start -- index.js --name 'jsore'",
-    "serve:overwrite": "yarn run serve:stop && pm2 delete jsore && dotenv -e envs/.env pm2 start -- index.js --name 'jsore'",
+    "serve:fresh": "dotenv -e envs/.env pm2 start -- src/index.js --name 'jsore'",
+    "serve:overwrite": "yarn run serve:stop && pm2 delete jsore && dotenv -e envs/.env pm2 start -- src/index.js --name 'jsore'",
     "serve:stop": "pm2 stop jsore",
-    "watch:dev:serve": "dotenv -e envs/.env node -- index.js",
-    "watch:dev": "nodemon --watch dist/index.html --watch dist/styles.css --watch index.js --exec yarn run watch:dev:serve",
-    "watch:existing": "nodemon --watch dist/index.html --watch dist/styles.css --watch routes/* --watch index.js --exec yarn run serve:overwrite"
+    "watch:dev:serve": "dotenv -e envs/.env node -- src/index.js",
+    "watch:dev": "nodemon --watch dist --watch src --exec yarn run watch:dev:serve",
+    "watch:existing": "nodemon --watch dist/index.html --watch dist/styles.css --watch routes/* --watch src/index.js --exec yarn run serve:overwrite"
   },
   "repository": {
     "type": "git",
