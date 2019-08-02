@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "jsonfile": "^5.0.0",
-    "require-all": "^3.0.0"
+    "jsonfile": "^5.0.0"
   }
 }

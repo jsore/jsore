@@ -15,7 +15,8 @@ module.exports = {
 
   notfound: function(err, req, res) {
     console.log(err.message);
-    res.writeHead(404, {
+    res.status(404);
+    res.writeHead(301, {
       'Location': 'https://' + req.headers['host'] + '/404-Not-Found'
     });
     return res.end();

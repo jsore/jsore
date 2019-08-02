@@ -16,58 +16,38 @@ const morgan = require('morgan');
 /** custom modules */
 
 /** high-order function, returns the results of a handler */
-const injectDependencies = require('./utils/inject-dependencies.js');
-
+const inject = require('./utils/inject-dependencies.js');
 /** private util for Dev to get keys for https module */
 const developmentServer = require('./utils/priv/load-dev-server.js') || '';
-
-/** 200 OK || 400 NOT FOUND util */
+/** responds to client if view is found or is not found */
 const pageStatus = require('./utils/page.js');
-
-// /** content scripts for DOM manipulations */
-// const scripts = require('require-all')({
-//   dirname: __dirname + '/content-scripts',
-//   filter: /((\w+-?){1,})\.js$/,
-//   recursive: true,
-//   map: function(name, path) {
-//     return name.replace(/-([a-z])/g, function(m, c) {
-//       return c.toUpperCase();
-//     });
-//   }//,
-//   //resolve: function(name) {
-//   //  return new name();
-//   //}
-// });
-//
-// usage, get afterInterval() export from src/content-scripts/page-not-found/redirectToHome.js:
-//
-// scripts.pageNotFound.redirectToHome.afterInterval()
-
+/** ignore all subpaths queried by client, go back to '/' */
+const nukeSubPaths = require('./utils/nuclear-root-redirect.js');
 
 /** handles passing to and receiving routing results */
-const homeHandler = require('./handlers/home/index.js');
-const maintenanceHandler = require('./handlers/maintenance/index.js');
-const pageNotFoundHandler = require('./handlers/page-not-found/index.js');
+const homeHandler = require('./handlers/home');
+const maintenanceHandler = require('./handlers/maintenance');
+const pageNotFoundHandler = require('./handlers/page-not-found');
 
 /** routes to a view, returns it for Express to render */
-const homeRouter = require('./routes/home/index.js');
-const maintenanceRouter = require('./routes/maintenance/index.js');
-const pageNotFoundRouter = require('./routes/page-not-found/index.js');
+const homeRouter = require('./routes/home');
+const maintenanceRouter = require('./routes/maintenance');
+const pageNotFoundRouter = require('./routes/page-not-found');
 
 /** grabs the current view, passes it back to routers */
-const homeView = require('./views/home/index.js');
-const maintenanceView = require('./views/maintenance/index.js');
-const pageNotFoundView = require('./views/page-not-found/index.js');
+const homeView = require('./views/home');
+const maintenanceView = require('./views/maintenance');
+const pageNotFoundView = require('./views/page-not-found');
 
 
 /** associates handler contexts */
-const handlerToRouteMap = new Map([
+const handlerMaps = new Map([
   [homeHandler, homeRouter],
   [maintenanceHandler, maintenanceRouter],
   [pageNotFoundHandler, pageNotFoundRouter],
 ]);
 
-const handlerToViewMap = new Map([
+const viewMaps = new Map([
   [homeHandler, homeView],
   [maintenanceHandler, maintenanceView],
   [pageNotFoundHandler, pageNotFoundView],
@@ -80,44 +60,22 @@ app.use(morgan('dev'));
 app.use(express.static(__dirname + '/../dist'));
 
 
-app.use('/404-not-found',
-  injectDependencies.intoHandlers(
-    pageNotFoundHandler, handlerToRouteMap, handlerToViewMap, pageStatus
-  )
-);
-
 /**
- * homepage is the default route...
+ * '/' handler checks if a MAINTENANCE_FLAG is set and lets
+ * GET fall through to the 'Under Maintenance' handler if found
  */
-app.get('/', injectDependencies.intoHandlers(
-  homeHandler, handlerToRouteMap, handlerToViewMap, pageStatus
-));
+app.use('/404-not-found', inject.dependencies(pageNotFoundHandler, handlerMaps, viewMaps, pageStatus));
+app.get('/', inject.dependencies(homeHandler, handlerMaps, viewMaps, pageStatus));
+app.get('/', inject.dependencies(maintenanceHandler, handlerMaps, viewMaps, pageStatus));
 
-/**
- * ...but it falls back here if maintenance flag is set
- */
-app.get('/', injectDependencies.intoHandlers(
-  maintenanceHandler, handlerToRouteMap, handlerToViewMap, pageStatus
-));
-
-app.get('/*', function(req, res) {
-  res.writeHead(301, {
-    'Location': 'https://jsore.com',
-  });
-  // res.redirect('/');
-  res.end();
-});
+/** should always be dead last - turns off undefined views */
+// app.get('/*', (req, res) => nukeSubPaths.goBackHome(req, res));
+app.use('/*', (req, res) => pageStatus.notfound('not found', req, res));
 
 
-/**
- * if we're on the development machine, load HTTPS server
- * for TLS/SSL over localhost...
- */
+/** load localhost with HTTPS if we're in dev... */
 const developmentMode = developmentServer.devKeys(app) || '';
-
-/**
- * ...otherwise use NGINX's SSL config
- */
+/** ...otherwise use NGINX's SSL config */
 const port = process.env.SERVER_PORT;
 app.listen(port, () => {
   console.log(`jsore running on port ${port}`);
