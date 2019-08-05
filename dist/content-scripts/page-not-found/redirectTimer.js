@@ -4,8 +4,11 @@
 
 /** timer functionality */
 
-document.addEventListener('DOMContentLoaded', (event) => {
+// document.addEventListener('DOMContentLoaded', (event) => {
+(function loadTimer() {
   const timer = document.getElementById('redirect-timer');
   timer.innerHTML = 'script reached';
+})();
+
   // window.location.replace("https://jsore.com");
-});
+// });

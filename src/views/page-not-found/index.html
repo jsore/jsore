@@ -1,6 +1,34 @@
 <html>
   <head>
-    <script src="content-scripts/page-not-found/redirectTimer.js"></script>
+    <!-- one of these will always cause a 404  -->
+    <!-- <script src="https://jsore.com/content-scripts/page-not-found/redirectTimer.js"></script> -->
+    <!-- <script src="https://localhost/content-scripts/page-not-found/redirectTimer.js"></script> -->
+    <script language="JavaScript">
+      /**
+       * because my route for the 404 page allows additional
+       * sub-paths to be listed before the 404-not-found
+       * path, the root directory this file is pointed to
+       * ( /dist/... ) can be altered ( some/path/dist/... )
+       * and screws up loading external files
+       *
+       * example: we're in development, which makes the path
+       * localhost/dist, calls to jsore.com/dist get 404'ed
+       *
+       * this hack fixes that
+       */
+      (function loadScript() {
+        /** should only ever be two locations possible */
+        const source = window.location.hostname === 'jsore'
+          ? 'https://jsore.com/content-scripts/page-not-found/redirectTimer.js'
+          : 'https://localhost/content-scripts/page-not-found/redirectTimer.js';
+
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = source;
+        const head = document.getElementsByTagName('head')[0];
+        head.appendChild(script);
+      })(console.log('Script dependencies found and loaded'));
+    </script>
   </head>
   <body>
     <h1>404 - Page Not Found</h1>
@@ -9,6 +37,5 @@
       You will be automatically redirected to the homepage in
     </p>
     <p class="timer" id="redirect-timer"></p>
-
   </body>
 </html>

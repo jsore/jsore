@@ -1,30 +1,41 @@
 /**
- * jsore/src/index.js
+ * jsore/src/index.js - Entrypoint for portfolio
  *
- * Entrypoint for portfolio
+ * client sends request to domain...
  *
- * src/index.js
- *  -> req /
- *     -> handler to parse the correct route
- *         -> router to get the view
- *             -> view to pass the view back
+ * -> the server receives the request
+ * -> server sends req to handler/<page-requested> after
+ *    injecting all required dependencies
+ *    ( for easier unit testing )
+ * -> handler parses the req and loads the correct route
+ * -> route retrieves the correct view
+ * <- view sends HTML back to Express to render
+ * <- files the HTML depends on ( styles, scripts ) are
+ *    provided by Express for the client
  */
 
 const express = require('express');
 const morgan = require('morgan');
 
-/** custom modules */
+
+/*----------  custom modules  ----------*/
 
 /** high-order function, returns the results of a handler */
 const inject = require('./utils/inject-dependencies.js');
+
 /** private util for Dev to get keys for https module */
 const developmentServer = require('./utils/priv/load-dev-server.js') || '';
+
 /** responds to client if view is found or is not found */
 const pageStatus = require('./utils/page.js');
-/** ignore all subpaths queried by client, go back to '/' */
-const nukeSubPaths = require('./utils/nuclear-root-redirect.js');
 
-/** handles passing to and receiving routing results */
+/** error handlers */
+// const ViewError = require('./errors/generators');
+
+/**
+ * req -> server -> route handler -> route -> view
+ * client <- Express <- page.js <- handler <- view
+ */
 const homeHandler = require('./handlers/home');
 const maintenanceHandler = require('./handlers/maintenance');
 const pageNotFoundHandler = require('./handlers/page-not-found');
@@ -54,24 +65,42 @@ const viewMaps = new Map([
 ]);
 
 
-/** init services */
+/*----------  app init  ----------*/
+
 const app = express();
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/../dist'));
 
 
+/*----------  routes  ----------*/
+
 /**
- * '/' handler checks if a MAINTENANCE_FLAG is set and lets
- * GET fall through to the 'Under Maintenance' handler if found
+ * we want this page to be available to all methods but
+ * without the performance hit of app.all()
  */
-app.use('/404-not-found', inject.dependencies(pageNotFoundHandler, handlerMaps, viewMaps, pageStatus));
+app.use('*/404-not-found/', inject.dependencies(pageNotFoundHandler, handlerMaps, viewMaps, pageStatus));
+
+/**
+ * '/' handler checks if a MAINTENANCE_FLAG variable is set
+ *
+ * if set, the request falls through to a route that serves
+ * a page telling the client the site is under maintenance
+ */
 app.get('/', inject.dependencies(homeHandler, handlerMaps, viewMaps, pageStatus));
 app.get('/', inject.dependencies(maintenanceHandler, handlerMaps, viewMaps, pageStatus));
 
-/** should always be dead last - turns off undefined views */
-// app.get('/*', (req, res) => nukeSubPaths.goBackHome(req, res));
-app.use('/*', (req, res) => pageStatus.notfound('not found', req, res));
+/**
+ * middleware that executes after Express parses all routes
+ *
+ * if no route was hit, let Express assume we want this
+ * route to be followed, which serves a 404 page
+ */
+app.use((req, res) => {
+  return pageStatus.notfound('Page Not Found', req, res);
+});
 
+
+/*----------  server init  ----------*/
 
 /** load localhost with HTTPS if we're in dev... */
 const developmentMode = developmentServer.devKeys(app) || '';
