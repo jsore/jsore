@@ -29,9 +29,6 @@ const developmentServer = require('./utils/priv/load-dev-server.js') || '';
 /** responds to client if view is found or is not found */
 const pageStatus = require('./utils/page.js');
 
-/** error handlers */
-// const ViewError = require('./errors/generators');
-
 /**
  * req -> server -> route handler -> route -> view
  * client <- Express <- page.js <- handler <- view
