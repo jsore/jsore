@@ -1,9 +1,6 @@
 /**
- * jsore/src/routes/page-not-found/index.js
+ * jsore/src/routes/page-not-found/index.js - gets the view for
+ * the current route
  */
 
-module.exports = {
-  route: function(req, res, currentView) {
-    return currentView.view(res);
-  }
-};
+module.exports = (req, res, currentView) => currentView(res);

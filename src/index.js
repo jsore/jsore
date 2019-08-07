@@ -15,6 +15,10 @@
  */
 
 const express = require('express');
+/** templating engine */
+// const exphbs = require('express-handlebars');
+// const Handlebars = require('../node_modules/handlebars/dist/handlebars.js');
+const Handlebars = require('handlebars');
 const morgan = require('morgan');
 
 
@@ -65,6 +69,16 @@ const viewMaps = new Map([
 /*----------  app init  ----------*/
 
 const app = express();
+// app.set('views', `${__dirname}/views/`);
+// const hbs = exphbs.create({ /* config */
+  // layoutsDir: 'src/views',
+  // partialsDir = [{
+
+  // }],
+// });
+// app.engine('handlebars', hbs.engine);
+// app.set('view engine', 'handlebars');
+// hbs.loadPartials();
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/../dist'));
 
@@ -75,16 +89,26 @@ app.use(express.static(__dirname + '/../dist'));
  * we want this page to be available to all methods but
  * without the performance hit of app.all()
  */
-app.use('*/404-not-found/', inject.dependencies(pageNotFoundHandler, handlerMaps, viewMaps, pageStatus));
+// app.use('*/404-not-found/', inject.dependencies(pageNotFoundHandler, handlerMaps, viewMaps, pageStatus));
+app.get('*/404-not-found/', inject.dependencies(pageNotFoundHandler, handlerMaps, viewMaps, pageStatus));
+// app.use('*404-not-found/', inject.dependencies(pageNotFoundHandler, handlerMaps, viewMaps, pageStatus));
 
 /**
- * '/' handler checks if a MAINTENANCE_FLAG variable is set
+ * '/ checks if a MAINTENANCE_FLAG variable is set
  *
  * if set, the request falls through to a route that serves
  * a page telling the client the site is under maintenance
  */
 app.get('/', inject.dependencies(homeHandler, handlerMaps, viewMaps, pageStatus));
 app.get('/', inject.dependencies(maintenanceHandler, handlerMaps, viewMaps, pageStatus));
+// app.get('/', function(req, res) {
+//   let comp;
+//   const placeholder = (req, res) => {
+//     comp = Handlebars.compile(`<div><h1>test</h1></div>`);
+//     res.end();
+//   };
+//   placeholder(req, res);
+// });
 
 /**
  * middleware that executes after Express parses all routes
@@ -93,7 +117,7 @@ app.get('/', inject.dependencies(maintenanceHandler, handlerMaps, viewMaps, page
  * route to be followed, which serves a 404 page
  */
 app.use((req, res) => {
-  return pageStatus.notfound('Page Not Found', req, res);
+ return pageStatus.notfound('Page Not Found', req, res);
 });
 
 
