@@ -88,7 +88,7 @@ app.use((req, res) => {
 /*----------  server init  ----------*/
 
 /** load localhost with HTTPS if we're in dev... */
-const developmentMode = developmentServer.devKeys(app) || '';
+const developmentMode = developmentServer(app) || '';
 /** ...otherwise use NGINX's SSL config */
 const port = process.env.SERVER_PORT;
 app.listen(port, () => {
