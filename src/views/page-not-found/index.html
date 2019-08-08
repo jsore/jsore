@@ -1,40 +1,8 @@
-
-            <!-- <script language="JavaScript">
-              /**
-               * because my route for the 404 page allows additional
-               * sub-paths to be listed before the 404-not-found
-               * path, the root directory this file is pointed to
-               * ( /dist/... ) can be altered ( some/path/dist/... )
-               * and screws up loading external files
-               *
-               * example: we're in development, which makes the path
-               * localhost/dist, calls to jsore.com/dist get 404'ed
-               *
-               * this hack fixes that
-               */
-              (function loadScript() {
-                /** should only ever be two locations possible */
-                const source = window.location.hostname === 'jsore'
-                  ? 'https://jsore.com/content-scripts/page-not-found/redirectTimer.js'
-                  : 'https://localhost/content-scripts/page-not-found/redirectTimer.js';
-
-                const script = document.createElement('script');
-                script.type = 'text/javascript';
-                script.src = source;
-                const head = document.getElementsByTagName('head')[0];
-                head.appendChild(script);
-              })(console.log('Script dependencies found and loaded'));
-            </script> -->
-            <h2>404 - Page Not Found</h2>
-            <p class="main-content-text">
-              The resource you were trying to locate could not be found
-            </p>
-            <p class="main-content-text">
-              You will be automatically redirected to the homepage in:<br>
-              <!-- <span id="redirect-timer" style="text-align: center; align-self: center;"></span> -->
-            </p>
-              <!-- <p class="timer" id="redirect-timer"></p></p> -->
-            <p class="main-content-text" id="redirect-timer" style="margin: 0px 0px 1rem 1rem"></p>
-
-<!-- </div> -->
-
+<h2>404 - Page Not Found</h2>
+<p class="main-content-text">
+  The resource you were trying to locate could not be found
+</p>
+<p class="main-content-text">
+  You will be automatically redirected to the homepage in:<br>
+</p>
+<p class="main-content-text" id="redirect-timer"></p>

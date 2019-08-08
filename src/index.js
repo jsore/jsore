@@ -1,24 +1,8 @@
 /**
  * jsore/src/index.js - Entrypoint for portfolio
- *
- * client sends request to domain...
- *
- * -> the server receives the request
- * -> server sends req to handler/<page-requested> after
- *    injecting all required dependencies
- *    ( for easier unit testing )
- * -> handler parses the req and loads the correct route
- * -> route retrieves the correct view
- * <- view sends HTML back to Express to render
- * <- files the HTML depends on ( styles, scripts ) are
- *    provided by Express for the client
  */
 
 const express = require('express');
-/** templating engine */
-// const exphbs = require('express-handlebars');
-// const Handlebars = require('../node_modules/handlebars/dist/handlebars.js');
-const Handlebars = require('handlebars');
 const morgan = require('morgan');
 
 
@@ -34,8 +18,8 @@ const developmentServer = require('./utils/priv/load-dev-server.js') || '';
 const pageStatus = require('./utils/page.js');
 
 /**
- * req -> server -> route handler -> route -> view
- * client <- Express <- page.js <- handler <- view
+ * req -> proxy -> server -> handler -> route -> view/content scripts
+ *   client for rendering <- proxy <- Express <-
  */
 const homeHandler = require('./handlers/home');
 const maintenanceHandler = require('./handlers/maintenance');
@@ -69,16 +53,6 @@ const viewMaps = new Map([
 /*----------  app init  ----------*/
 
 const app = express();
-// app.set('views', `${__dirname}/views/`);
-// const hbs = exphbs.create({ /* config */
-  // layoutsDir: 'src/views',
-  // partialsDir = [{
-
-  // }],
-// });
-// app.engine('handlebars', hbs.engine);
-// app.set('view engine', 'handlebars');
-// hbs.loadPartials();
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/../dist'));
 
@@ -89,9 +63,7 @@ app.use(express.static(__dirname + '/../dist'));
  * we want this page to be available to all methods but
  * without the performance hit of app.all()
  */
-// app.use('*/404-not-found/', inject.dependencies(pageNotFoundHandler, handlerMaps, viewMaps, pageStatus));
 app.get('*/404-not-found/', inject.dependencies(pageNotFoundHandler, handlerMaps, viewMaps, pageStatus));
-// app.use('*404-not-found/', inject.dependencies(pageNotFoundHandler, handlerMaps, viewMaps, pageStatus));
 
 /**
  * '/ checks if a MAINTENANCE_FLAG variable is set
@@ -101,14 +73,6 @@ app.get('*/404-not-found/', inject.dependencies(pageNotFoundHandler, handlerMaps
  */
 app.get('/', inject.dependencies(homeHandler, handlerMaps, viewMaps, pageStatus));
 app.get('/', inject.dependencies(maintenanceHandler, handlerMaps, viewMaps, pageStatus));
-// app.get('/', function(req, res) {
-//   let comp;
-//   const placeholder = (req, res) => {
-//     comp = Handlebars.compile(`<div><h1>test</h1></div>`);
-//     res.end();
-//   };
-//   placeholder(req, res);
-// });
 
 /**
  * middleware that executes after Express parses all routes

@@ -13,10 +13,9 @@ const pageNotFound = req => `https://${req.headers['host']}${req.url}/404-not-fo
 
 module.exports = {
 
-  found: function(req, res, retrievedView) {
+  found: function(res, retrievedView) {
     res.status(200);
     res.set('Content-Type', 'text/html');
-    // retrievedView.map(view =>  res.write(view));
     res.write(retrievedView);
     return res.end();
   },

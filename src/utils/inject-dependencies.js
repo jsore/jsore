@@ -8,6 +8,6 @@ module.exports = {
   dependencies: function(handler, handlerToRouteMap, handlerToViewMap, page) {
     const router = handlerToRouteMap.get(handler);
     const currentView = handlerToViewMap.get(handler);
-    return (req, res, next) => { handler.handle(req, res, next, router, currentView, page); };
+    return (req, res, next) => { handler(req, res, next, router, currentView, page); };
   }
 };

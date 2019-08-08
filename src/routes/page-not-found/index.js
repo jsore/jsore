@@ -3,4 +3,4 @@
  * the current route
  */
 
-module.exports = (req, res, currentView) => currentView(res);
+module.exports = (req, res, currentView) => currentView(req, res);
