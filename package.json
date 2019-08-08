@@ -8,9 +8,10 @@
     "serve:fresh": "dotenv -e envs/.env pm2 start -- src/index.js --name 'jsore'",
     "serve:overwrite": "yarn run serve:stop && pm2 delete jsore && dotenv -e envs/.env pm2 start -- src/index.js --name 'jsore'",
     "serve:stop": "pm2 stop jsore",
-    "watch:dev:serve": "dotenv -e envs/.env node -- src/index.js",
     "watch:dev": "nodemon -e js,html,css,json --watch dist --watch src --exec yarn run watch:dev:serve",
-    "watch:existing": "nodemon --watch dist/index.html --watch dist/styles.css --watch routes/* --watch src/index.js --exec yarn run serve:overwrite"
+    "watch:dev:serve": "dotenv -e envs/.env node -- src/index.js",
+    "watch:prod": "nodemon -e js,html,css,json --watch dist --watch src --exec yarn run watch:prod:serve",
+    "watch:prod:serve": "dotenv -e envs/.env node -- src/index.js"
   },
   "repository": {
     "type": "git",
