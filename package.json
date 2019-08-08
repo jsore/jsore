@@ -4,14 +4,19 @@
   "description": "temp splash page",
   "main": "index.js",
   "scripts": {
+    "env": "yarn run --silent environment:quietly --grep=Development",
+    "environment:quietly": "node src/utils/priv/load-dev-server.js",
     "monitor": "pm2 monit",
     "serve:fresh": "dotenv -e envs/.env pm2 start -- src/index.js --name 'jsore'",
     "serve:overwrite": "yarn run serve:stop && pm2 delete jsore && dotenv -e envs/.env pm2 start -- src/index.js --name 'jsore'",
     "serve:stop": "pm2 stop jsore",
     "watch:dev": "nodemon -e js,html,css,json --watch dist --watch src --exec yarn run watch:dev:serve",
     "watch:dev:serve": "dotenv -e envs/.env node -- src/index.js",
-    "watch:prod": "nodemon -e js,html,css,json --watch dist --watch src --exec yarn run watch:prod:serve",
-    "watch:prod:serve": "dotenv -e envs/.env node -- src/index.js"
+    "watch:prod": "yarn run serve:stop && nodemon -e js,html,css,json --watch dist --watch src --exec yarn run watch:prod:serve",
+    "watch:cleanup": "pm2 delete jsore && dotenv -e envs/.env pm2 start -- src/index.js --name 'jsore'",
+    "watch:prod:serve": "dotenv -e envs/.env node -- src/index.js",
+    "dotenv:pm2": "dotenv -e envs/.env pm2 start -- src/index.js --name 'jsore'",
+    "nodemon": "nodemon -e js,html,css,json --watch dist --watch src"
   },
   "repository": {
     "type": "git",
