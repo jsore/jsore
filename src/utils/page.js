@@ -8,7 +8,6 @@
  * not sure if it's necessary to obfuscate this by hiding it
  * but there's no harm in doing so
  */
-// const pageNotFound = req => `https://${req.headers['host']}${req.url}404-not-found`;
 const pageNotFound = req => `https://${req.headers['host']}${req.url}/404-not-found`;
 
 module.exports = {

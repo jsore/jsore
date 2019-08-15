@@ -12,6 +12,11 @@ const footer = require('./footer')();
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
+// const page = view => {
+//   fs.readFileSync(`${view}` + '/index.html');
+// };
+
+
 module.exports = {
   buildDom: function(view) {
     /**
@@ -40,6 +45,7 @@ module.exports = {
      */
     const virtualConsole = new jsdom.VirtualConsole();
     virtualConsole.sendTo(console, { omitJSDOMErrors: true });
+
     /**
      * create the JSDOM environment and send that instance
      * back to the current view

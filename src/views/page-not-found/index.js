@@ -5,15 +5,19 @@
 
 const generatePartials = require('../view-template.js');
 
-/** content script 1 - load a countdown timer and redirect */
+/**
+ * content script 1 - load a countdown timer and redirect
+ *
+ * insert a script that can run in the browser DOM in the
+ * background while Node continues processing stuff
+ *
+ * all this does is start a timer, beginning at 10, then
+ * ticking down 1 int every second, finally redirecting
+ * the client to the homepage and triggering a listener to
+ * halt another timer running parallel, printing to STDOUT
+ */
 const redirectTimer = (req, res, dom, window, document) => {
-
   let seconds = 10;
-
-  /**
-   * insert a script that can run in the browser DOM in the
-   * background while Node continues processing stuff
-   */
   const timerScript = document.createElement('script');
   timerScript.innerHTML = `
     function countdown(seconds) {
@@ -41,27 +45,37 @@ const redirectTimer = (req, res, dom, window, document) => {
    */
   const nodeCounter = (s) => {
     const counter = setInterval(() => {
-      process.stdout.write(`${s} `);
+      process.stdout.write(`  Page Not Found, redirecting in... ${s} \r`);
       s--;
       if (s < 1) {
+        /** this redirects after the default Node countdown */
         clearInterval(counter);
-        process.stdout.write('Redirecting...' + '\n');
+        process.stdout.write(`\n  Now\n`);
       }
     }, 1000);
-    window.addEventListener('popstate', handler, false);
+    // window.addEventListener('popstate', handler, false);
+    /** this redirects if page is refreshed during load... */
+    window.addEventListener('change', handler);
     function handler() {
+      /** ...otherwise the counter just keeps tickin along */
       clearInterval(counter);
-      process.stdout.write('Redirecting...' + '\n');
+      process.stdout.write(`\n  Now\n`);
+      dom.window.location.assign(process.env.HOST);
     }
   };
   nodeCounter(seconds);
 };
 
 
+/**
+ * hooks into the view to grab HTML/CSS assets, injects any
+ * content scripts I want running on the page onload then
+ * return serialized HTML to Express to serve to the client
+ */
 module.exports = (req, res) => {
   const dir = __dirname;
   const view = generatePartials.buildDom(dir);
-  console.log('notfoundview.exports()');
+  // console.log('notfoundview.exports()');
   generatePartials.scriptAPI(req, res, view, redirectTimer);
   return view.serialize();
 };
