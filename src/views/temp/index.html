@@ -33,6 +33,8 @@
         font-family: 'Archive', sans-serif;
         /*background-color: rgb(217, 217, 217);*/
         background-color: white;
+        /*height: 100%;*/
+        /*height: auto;*/
       }
       .lh-copy {
         /*color: #444444;*/
@@ -52,16 +54,23 @@
       .page-content {
         /*align-content: start;*/
         /*height: 100%;*/
+        /*align-content: center;*/
+      }
+      .container {
+        /*height: 100%;*/
       }
       .page-content-title {
         /*padding: 0;*/
         padding: 0px 0px 0px 0px;
+        /*align-self: stretch;*/
+        /*align-content: center;*/
+        /*text-align: center;*/
       }
       .tc-1 {
-        padding: 0px 0px 0px 0px;
+        /*padding: 0px 0px 0px 0px;*/
       }
       .ph3 {
-        padding: 0px 0px 0px 0px;
+        /*padding: 0px 0px 0px 0px;*/
       }
       .page-content-text {
         /*margin: 1rem 0 1rem 0;*/
@@ -80,6 +89,10 @@
       /*page-content: fl w-80 pa2*/
       kbd {
         /*font-weight: 200;*/
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
+        /*align-content: center;*/
+        text-align: center;
         color: #999999;
         font-size: 1.15rem;
         font-weight: 300;
@@ -88,7 +101,7 @@
         color: #444444;
         font-size: 3rem;
         font-weight: bold;
-        /*margin-bottom: 0;*/
+        margin-bottom: 0;
         /*margin-top: 20px;*/
         /*margin-top: 0px;*/
         letter-spacing: 0.8px;
@@ -100,14 +113,48 @@
         margin-bottom: 0;
         color: #444444;
       }
+      .sidebar-signature-name {
+        color: white;
+      }
       .sidebar-signature-titles {
         font-size: 1.20rem;
-        color: #8c8c8c;
+        /*color: #8c8c8c;*/
+        color: #bfbfbf;
         font-weight: 500;
+      }
+      .sidebar {
+        /*border-bottom: 1px solid #d9d9d9;*/
+        /*box-shadow: 0 5px 10px rgba(154, 160, 185, .1), 0 15px 40px rgba(166, 173, 201, .3);*/
+        background-color: black;
+
+      }
+      main {
+        /*margin-top: 200px;*/
+        /*overflow: hidden;*/
+      }
+      article {
+        /*align-items: center;*/
+        margin: 0;
+        border-bottom: 1px solid #d9d9d9;
+        /*border-top: 0px;*/
+
+        /*box-shadow: 0 5px 10px rgba(154, 160, 185, .1), 0 15px 40px rgba(166, 173, 201, .3);*/
+        -webkit-box-shadow: 0 5px 10px rgba(154, 160, 185, .1), -5px 15px 40px rgba(166, 173, 201, .3);
+        -moz-box-shadow: 0 5px 10px rgba(154, 160, 185, .1), -5px 15px 40px rgba(166, 173, 201, .3);
+        box-shadow: 0 5px 10px rgba(154, 160, 185, .1), -5px 15px 40px rgba(166, 173, 201, .3);
       }
       /*sidebar: fl w-20 pa2 */
     /*page-content: fl w-80 pa2*/
-
+      footer {
+        /*position: fixed;*/
+        /*text-align: center;*/
+        /*bottom: 0;*/
+        background-color: black;
+        color: #bfbfbf;
+      }
+      small {
+        text-align: center;
+      }
     </style>
 
     <!-- base64 favicon image, apparently for performance -->
@@ -118,13 +165,17 @@
     <!-- <main class="" -->
     <!-- <div class="container"> -->
     <!-- <div class="mw9 center ph3-ns container"> -->
-    <div class="mw9 left ph3-ns container">
-      <div class="cf ph2-ns page-content-wrapper">
-        <div class="fl w-30 pa3 sidebar">
+    <!-- <div class="left ph3-ns w-100 container"> -->
+    <div class="left w-100 vh-100 container">
+      <!-- <div class="cf ph2-ns w-100 page-content-wrapper"> -->
+      <div class="cf w-100 page-content-wrapper">
+        <!-- <div class="fl w-30 pa3 h-100 sidebar"> -->
+        <!-- <div class="fl w-100 pa3 sidebar"> -->
+          <div class="fl w-100 ma0 ph4 sidebar">
           <!-- <div class="fl w-100 w-100-ns pa2 sidebar-signature"> -->
-          <div class="fl w-100 w-100-ns pa2 sidebar-signature">
+          <div class="fl w-100 w-100-ns sidebar-signature">
             <!-- <div class="sidebar-signature-name"> -->
-              <h1 class="sidebar-signature-name">
+              <h1 class="mt3 sidebar-signature-name">
                 Justin Sorensen
               </h1>
               <!-- <h2>Network Abuse Prevention, Security Specialist</h2> -->
@@ -133,7 +184,7 @@
               </h2>
               <!-- <h2>Full Stack Developer&nbsp;</h2> -->
               <!-- <h2 class="sidebar-signature-titles" style="margin-top: 3px; display: inline-block"> -->
-              <h2 class="sidebar-signature-titles" style="display: inline-block">
+              <h2 class="mb4 sidebar-signature-titles" style="display: inline-block">
                 Full Stack Developer&nbsp;
                 <i class="fab fa-js-square fa-xs"></i>
                 <i class="fab fa-node-js fa-xs"></i>
@@ -143,10 +194,12 @@
         </div>
         <!-- <div class="fl w-70 pa2 page-content"> -->
         <!-- <div class="fl w-70 pa3 page-content"> -->
-        <div class="fl w-70 page-content">
+        <!-- <div class="fl w-70 page-content"> -->
+        <!-- <div class="fl w-100 page-content"> -->
+        <div class="fl flex items-center w-100 h-100 page-content">
 
           <!-- <main class="fl w-100 w-100-ns pa3 pa5-ns" style="padding: 0px 0px 0px 0px;"> -->
-          <main class="fl w-100 w-100-ns pa3 pa5-ns">
+          <main class="mw8 fl w-100 w-100-ns center h-100 pa3 pb0 pa5-ns">
 
             <!--  /*----------  "maintenance"  ----------*/  -->
 
@@ -168,43 +221,55 @@
             </p>
             -->
 
-            <article class="pb5 pt0">
-              <header class="tc-1 ph3 ph4-ns measure lh-title pt4 pt5-ns">
-                <h2 class="page-content-title">
+            <article class="center h-100 pb5 pt0">
+              <!-- <header class="tc-1 ph3 ph4-ns measure lh-title pt4 pt5-ns"> -->
+              <header class="tc-1 ph3 ph4-ns lh-title pt4 pt5-ns">
+                <h2 class="tc page-content-title">
                   Down For Maintenance
                 </h2>
+                <p class="tc mb0"><kbd class="f6 page-content-title">2019.10.01</kbd></p>
+                <!-- <kbd class="f6">2019.10.01</kbd> -->
               </header>
-              <div class="ph3 ph4-m ph5-l">
-                <p class="f5 lh-copy measure-wide page-content-text">
+              <!-- <div class="ph4 ph4-m ph5-l"> -->
+              <div class="pa5 ph6">
+                <!-- <p class="f5 lh-copy measure-wide page-content-text"> -->
+                <p class="f5 lh-copy page-content-text">
                   I'm currently working on a back-end upgrade for my personal network, along
                   with a refreshed front-end for this site.
                 </p>
-                <p class="f5 lh-copy measure-wide page-content-text">
+                <!-- <p class="f5 lh-copy measure-wide page-content-text"> -->
+                <p class="f5 lh-copy page-content-text">
                   This will eventually act as a portfolio of my technical background and
                   serve some of my writeups about development and server administration.
                 </p>
-                <p class="f5 lh-copy measure-wide page-content-text">
+                <!-- <p class="f5 lh-copy measure-wide page-content-text"> -->
+                <p class="f5 lh-copy page-content-text">
                   While I work on improvemnts here, <a>my GitHub</a> is where you'll find my
                   code and raw versions of the <a>personal</a> <a>technical</a>
                   <a>documentation</a> that I've written: the notes I've
                   taken while researching <kbd>something</kbd>.
                 </p>
               </div>
-            </article>
+            <!-- </article> -->
 
 
 
             <!--  /*----------  "footer"  ----------*/  -->
 
-            <p>
-              <kbd style="display: inline-block">
-                <i class="far fa-envelope fa-xs" ></i> justin@jsore.com
-              </kbd>
-            </p>
+              <p class="tc mb0">
+                <kbd class="f6" style="display: inline-block">
+                  <i class="far fa-envelope fa-xs" ></i> justin@jsore.com
+                </kbd>
+              </p>
+            </article>
           </main>
         </div>
 
       </div>
+      <footer class="pa2 tc w-100 fixed bottom-0">
+        <small class="f6 db w-100 tc">© 2019 Justin Sorensen</small>
+      </footer>
     </div>
+
   </body>
 </html>
