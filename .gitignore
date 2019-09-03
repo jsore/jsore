@@ -8,3 +8,4 @@ envs/*
 node_modules/*
 
 easton.js
+src/views/temp
