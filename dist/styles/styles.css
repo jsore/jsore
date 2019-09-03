@@ -140,7 +140,7 @@ small {
     padding-right: 3.5rem;
   }*/
 }
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 580px) {
   .article-content {
     border-bottom: none;
     -webkit-box-shadow: none;
