@@ -7,14 +7,6 @@ body {
   font-family: 'Archive', sans-serif;
   background-color: white;
 }
-.page-content-title {
-  padding: 0px 0px 0px 0px;
-}
-.page-content-text {
-  color: #444444;
-  letter-spacing: 0.5px;
-  font-weight: 300;
-}
 kbd {
   text-align: center;
   color: #999999;
@@ -35,17 +27,6 @@ h2 {
   margin-bottom: 0;
   color: #444444;
 }
-.heading-signature-name {
-  color: white;
-}
-.heading-signature-titles {
-  font-size: 1.20rem;
-  color: #bfbfbf;
-  font-weight: 500;
-}
-.heading {
-  background-color: black;
-}
 article {
   margin: 0;
   border-bottom: 1px solid #d9d9d9;
@@ -59,4 +40,25 @@ footer {
 }
 small {
   text-align: center;
+}
+
+.heading {
+  background-color: black;
+}
+.heading-signature-name {
+  color: white;
+}
+.heading-signature-titles {
+  font-size: 1.20rem;
+  color: #bfbfbf;
+  font-weight: 500;
+}
+
+.page-content-title {
+  padding: 0px 0px 0px 0px;
+}
+.page-content-text {
+  color: #444444;
+  letter-spacing: 0.5px;
+  font-weight: 300;
 }
