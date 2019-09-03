@@ -110,8 +110,8 @@ small {
 
 @media screen and (max-width: 912px) {
   .article-content {
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
   .heading-signature-name {
     font-size: 2rem;
