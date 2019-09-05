@@ -1,9 +1,31 @@
 /*----------  general styles  ----------*/
+
 body {
   line-height: 1.3;
   font-family: 'Archive', sans-serif;
   background-color: white;
   color: white;
+  overflow: hidden;
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+#highest-level-container {
+  /*overflow-x: hidden;*/
+  /*-webkit-transition: color 0.5s ease-in, background-color 0.1s ease-in;
+    -moz-transition: color 0.5s ease-in, background-color 0.1s ease-in;
+    -o-transition: color 0.5s ease-in, background-color 0.1s ease-in;
+    transition: color 0.5s ease-in, background-color 0.1s ease-in;*/
+  /*opacity: 0;
+  -webkit-transition: opacity;*/
 }
 kbd {
   text-align: center;
@@ -49,12 +71,16 @@ small {
 }
 .heading {
   background-color: black;
+
   -webkit-box-shadow: 0 5px 10px rgba(77, 77, 77, .5), -5px 15px 40px rgba(166, 173, 201, .3);
   -moz-box-shadow: 0 5px 10px rgba(77, 77, 77, .5), -5px 15px 40px rgba(166, 173, 201, .3);
   box-shadow: 0 5px 10px rgba(77, 77, 77, .5), -5px 15px 40px rgba(166, 173, 201, .3);
 }
 .heading-signature-name-link, .heading-signature-name {
   color: white;
+}
+.heading-signature-name {
+  display: inline-flex;
 }
 /*.heading-signature-name-link:hover {
   outline: 1px dotted white;
@@ -106,14 +132,30 @@ small {
 .underline {
   color: black;
 }
-.child {
+/*.child, .chevron-nav-links {
+  display: inline-block;
+  opacity: 0;
+  overflow: hidden;
+}*/
+.chevron-a-link {
+  overflow: hidden;
   /*visibility: hidden;*/
-  /*opacity: 0;*/
-  display: none;
+  /*display: none;*/
+  /*pointer-events: none;*/
+  /*margin-top: -250px;*/
+}
+.chevron-a-link {
+  /*margin-top: -240px;*/
+  /*position: absolute;*/
+  overflow: hidden;
 }
 .chevron-menu {
+  overflow: hidden;
   display: none;
 }
+/*.chevron-nav-container {
+  display: none;
+}*/
 
 /*.link:focus {
   outline: 1px dotted currentColor;
@@ -288,35 +330,128 @@ small {
   }
   .chevron-menu {
     display: inline-block;
+    /*display: inline-flex;*/
     font-size: 1.2rem;
     margin-top: 0;
+    -webkit-transition: color 0.8s ease-in, background-color 0.1s ease-in;
+    -moz-transition: color 0.8s ease-in, background-color 0.1s ease-in;
+    -o-transition: color 0.8s ease-in, background-color 0.1s ease-in;
+    transition: color 0.8s ease-in, background-color 0.1s ease-in;
+    /*pointer-events: none;*/
   }
-  .chevron-menu:hover .child {
-    /*.child {
-      display: inline-block;
-    }*/
+  /*#chevron-i:hover, #chevron-i:focus, #chevron-i:active {
+    transform: rotate(-90deg);
+    transition: transform 0.3s linear;
+  }
+  #chevron-i:hover::after, #chevron-i:focus::after, #chevron-i:active::after {
+    transform: rotate(90deg);
+    transition: transform 0.3s linear;
+  }*/
+  .dn {
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
     display: inline-block;
-    /*opacity: 1;*/
   }
-  .heading-signature-name:hover .heading-nav.heading-nav-div.child.chevron-menu.fas.child {
+  /*.fa-chevron-circle-down:hover .chevron-a-link, .fa-chevron-circle-down:focus .chevron-a-link, .fa-chevron-circle-down:active .chevron-a-link {*/
+  .chevron-menu:hover .dn, .chevron-menu:focus .dn, .chevron-menu:active .dn {
+    /*display: inline-block;*/
+    height: auto;
+    width: auto;
+    overflow: hidden;
+
+    opacity: 1;
+    -webkit-transition: opacity .1s ease-in-out;
+    -o-transition: opacity .1s ease-in-out;
+    transition: opacity .1s ease-in-out;
+  }
+
+  /*.child:hover, .child:focus, .child:active {
+    opacity: .8;
+    -webkit-transition: opacity .2s ease;
+    -o-transition: opacity .2s ease;
+    transition: opacity .2s ease;
+  }*/
+  /*.spanner:hover, .spanner:focus, .spanner:active {
+    opacity: 0;
+    -webkit-transition: opacity .4s ease;
+    -o-transition: opacity .4s ease;
+    transition: opacity .4s ease;
+  }*/
+  /*.fa-chevron-circle-down:hover, .fa-chevron-circle-down:active .child, .chevron-nav-links, .chevron-menu, .chevron-a-link {
+    pointer-events: auto;
+    display: inline-block;
+    opacity: 1;
+  }*/
+
+  /*.hide-child:hover .child, .hide-child:focus .child, .hide-child:active .child {*/
+    /*display: inline-block;*/
+  /*}*/
+
+  /*.fa-chevron-circle-down:focus .child, .chevron-nav-links {
+    display: inline-block;
+    opacity: 1;
+  }
+  .fa-chevron-circle-down:focus .child, .chevron-nav-links {
+    display: inline-block;
+    opacity: 1;
+  }*/
+  /*.chevron-menu:focus .child {
     display: inline-block;
   }
+  .chevron-menu:active .child {
+    display: inline-block;
+  }*/
+
   .nav-links {
     display: none;
   }
   .heading-nav {
-    float: right;
+    /*float: right;*/
+    display: inline-flex;
   }
   .heading-nav-div {
     padding: 10px;
-    /*margin: -10px;*/
-    margin-top: -66px;
-    margin-right: 178px;
+    /*margin-top: -66px;*/
+    /*margin-right: 178px;*/
     display: block;
-
+    margin-left: .5rem;
     border: 0px solid black;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+  }
+  #chevron-nav-container {
+    font-family: 'Archive', sans-serif;
+    width: 100px;
+    margin-left: 35px;
+    /*margin-top: -240px;*/
+    margin-top: -24px;
+    overflow: hidden;
+  }
+  .chevron-nav-links {
+  /*#chevron-nav-links {*/
+    font-size: .9rem;
+    font-weight: 600;
+    background: none;
+    width: 90%;
+    color: #bfbfbf;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .fa-chevron-right:before {
+    content: "\f054";
+    font-size: .7rem;
+  }
+
+  #about-me-link, #resume-link {
+    color: #bfbfbf;
+  }
+  #about-me-link {
+    /*margin-bottom: 10px;*/
+  }
+  #resume-link {
+    /*margin-top: 10px;*/
   }
 }
