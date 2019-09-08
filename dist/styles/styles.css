@@ -89,7 +89,13 @@ small {
   box-shadow: 0 5px 10px rgba(33, 33, 33, .5), -5px 15px 40px rgba(77, 77, 77, .5);
   border-bottom: none;
   padding: 18px;
-  margin: -18px;
+  margin: -12px;
+}
+.heading-nav-div:hover {
+  -webkit-box-shadow: 0 5px 15px rgba(77, 77, 77, .5), -5px 15px 80px rgba(166, 173, 201, .90);
+  -moz-box-shadow: 0 5px 15px rgba(77, 77, 77, .5), -5px 15px 80px rgba(166, 173, 201, .90);
+  box-shadow: 0 5px 15px rgba(77, 77, 77, .5), -5px 15px 80px rgba(166, 173, 201, .90);
+  transition: .25s;
 }
 .nav-links {
   color: #bfbfbf;
