@@ -21,7 +21,7 @@
 
     <base href="/">
     <link rel="stylesheet" href="styles/fa/css/all.min.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo|Ubuntu+Mono" />
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
     <link rel="stylesheet" href="styles/styles.css" />
 
@@ -49,32 +49,69 @@
               <i class="fab fa-node-js fa-xs"></i>
             </h2>
 
-            <nav class="mb0 flex justify-center heading-nav">
-              <div class="flex-grow flex items-center bg-black ba b--a6a6a6 heading-nav-div">
-                <a class="link fw4 dib mr3 ml3 pl3 no-underline underline-hover pointer nav-links" href="/">
-                  About Me
+            <nav class="mb0 flex  justify-center heading-nav">
+              <!-- <div class="hover-wrapper"> -->
+              <div class="flex-grow flex items-center bg-black ba b--a6a6a6 heading-nav-div" id="nav-div">
+
+                <kbd class="nav-code">
+                  <span class="const">const </span><span class="const-nav">nav = </span>{ '<span><a class="link fw4 dib no-underline underline-hover pointer nav-links" title="Bio" href="/">
+                    bio
+                  </a></span>',
+                  '<span><a class="link fw4 dib no-underline underline-hover pointer nav-links" title="Resume" href="/resume">
+                    resume
+                  </a></span>',
+                  '<span><a class="link fw4 dib no-underline underline-hover pointer nav-links" title="Contact" href="/contact">
+                    contact
+                  </a></span>' };
+                </kbd>
+
+                <!--
+                <span><kbd>{ "</kbd></span>
+
+                <a class="link fw4 dib mr3 ml3 pl3 no-underline underline-hover pointer nav-links"
+                  title="About Me" href="/">
+                  <kbd>About</kbd>
                 </a>
-                <i class="fas fa-code fa-xs"></i>
-                <a class="link fw4 dib ml3 mr3 pr3 no-underline underline-hover pointer nav-links" href="/">
-                  Resume
+
+                <span><kbd>", "</kbd></span>
+
+                <a class="link fw4 dib ml3 mr3 pr3 no-underline underline-hover pointer nav-links"
+                  title="Resume" href="/resume">
+                  <kbd>Resume</kbd>
                 </a>
+
+                <span><kbd>", "</kbd></span>
+
+                <a class="link fw4 dib ml3 mr3 pr3 no-underline underline-hover pointer nav-links"
+                  title="Contact" href="#">
+                  <kbd>Contact</kbd>
+                </a>
+
+                <span><kbd>" }</kbd></span>
+              -->
+
                 <div class="pa3 mobile-nav-container">
                   <i class="flex fas fa-bars mobile-nav-icon" id="mobile-nav-icon"></i>
                   <div class="mobile-nav-links">
-                    <a class="link no-underline underline-hover pointer" id="about-me-link" href="/">
-                      About Me
+                    <a class="link no-underline underline-hover pointer" id="about-me-link"
+                      title="About Me" href="/">
+                      Bio
                     </a>
-                    <a class="link no-underline underline-hover pointer" id="resume-link" href="/">
+                    <a class="link no-underline underline-hover pointer" id="resume-link"
+                      title="Resume" href="/resume">
                       Resume
                     </a>
                   </div>
                 </div>
               </div>
+              <!-- </div> -->
             </nav>
 
           </div>
+
         </div>
+
         <div class="fl flex items-center w-100 h-100 page-content">
-          <main class="mw8 fl w-100 w-100-ns center h-100 pa3 pb0 pa5-ns main">
+          <main class="fl w-100 w-100-ns center h-100 pa3 pb0 pa5-ns main">
             <article class="center h-100 pb5 pt0 article-content">
               <header class="tc-1 ph3 ph4-ns lh-title pt4 pt5-ns">
