@@ -40,6 +40,9 @@ h2 {
   margin-bottom: 0;
   color: #444444;
 }
+h3 {
+  color: #cccccc;
+}
 article {
   margin: 0;
   border-bottom: 1px solid #d9d9d9;
@@ -49,7 +52,8 @@ article {
 }
 footer {
   background-color: black;
-  color: #bfbfbf;
+  /*color: #bfbfbf;*/
+  color: #666666;
 }
 small {
   /*text-align: center;*/
@@ -85,7 +89,6 @@ body .main {
   color: #bfbfbf;
   font-weight: 500;
 }
-
 .heading-nav {
   color: #bfbfbf;
   display: flex;
@@ -109,11 +112,34 @@ body .main {
   color: #bfbfbf;
   font-size: 1.20rem;
 }
+.contact-links, .contact-email {
+  color: #bfbfbf;
+  font-size: 1.20rem;
+  padding-bottom: 1rem;
+}
 .nav-links:hover, .nav-links:focus {
   color: white;
+  outline: none;
 }
 .nav-links:active {
   color: white;
+  outline: none;
+}
+.contact-links:hover, .contact-links:focus {
+  color: white;
+}
+.contact-links:active {
+  color: white;
+}
+#contact-link, #resume-link {
+  background: none;
+  outline: none;
+  border: none;
+  padding: 0;
+}
+#contact-link:active, #contact-link:visited {
+  color: #bfbfbf;
+  text-decoration: none;
 }
 .page-content-title {
   padding: 0px 0px 0px 0px;
@@ -125,6 +151,10 @@ body .main {
   color: #444444;
   letter-spacing: 0.5px;
   font-weight: 300;
+  /*max-width: 60rem;*/
+}
+.content-text-black-bg {
+  color: #999999;
 }
 .underline {
   color: black;
@@ -149,6 +179,21 @@ body .main {
 }
 .construction-todo {
   color: #666666;
+}
+.text-wrapper {
+  padding-top: 1rem;
+}
+#i-are-good-with-words {
+    margin-left: 4rem;
+    margin-right: 4rem;
+    min-width: 20rem;
+    max-width: 24rem;
+  }
+
+@media screen and (max-width: 1922px) {
+  .pt5-ns {
+    padding-top: 1.9rem;
+  }
 }
 
 @media screen and (max-width: 1445px) {
@@ -207,7 +252,7 @@ body .main {
     padding-top: 0;
   }
   .text-wrapper, .page-content-title {
-    padding-top: 1rem;
+    padding-top: 4rem;
   }
 }
 
@@ -237,10 +282,50 @@ body .main {
   .const {
     display: none;
   }
+  #i-are-good-with-words {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    min-width: 20rem;
+    max-width: 24rem;
+  }
+  .bio-text-wrapper {
+    flex-wrap: wrap !important;
+    margin: 0;
+    padding: 0;
+  }
+  .bio-text-wrapper-wrapper {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  #what-i-know, #get-in-touch {
+    /*padding-top: 4rem;*/
+  }
+
+  .bio-content-titles {
+    padding-top: 2rem;
+    font-size: 1rem;
+  }
+  .what-i-know-text {
+    text-align: center;
+  }
+  .contact-links, .contact-email {
+   font-size: 1rem;
+  }
+  .bottom-title {
+    padding-bottom: 1.5rem;
+  }
 }
 
 /*@media screen and (max-width: 912px) {*/
 @media screen and (max-width: 1000px) {
+  body .main {
+    /*max-width: 80rem;*/
+    padding-top: 5rem;
+    padding-bottom: 1rem;
+  }
   .article-content {
     padding-left: 5rem;
     padding-right: 5rem;
@@ -258,7 +343,12 @@ body .main {
     font-size: .6rem;
   }
   .heading-nav {
-    margin-bottom: 0;
+    /*margin-bottom: 0;*/
+    margin: 0;
+    padding-right: 0;
+    position: absolute;
+    right: 2.5rem;
+    top: 67px;
   }
   .nav-links {
     font-weight: 500;
@@ -276,8 +366,7 @@ body .main {
   .heading-nav-div {
     padding: 10px;
     margin-top: -30px;
-    /*padding-right: 1rem;*/
-    /*padding-left: 1rem;*/
+    border-bottom: 1px solid #a6a6a6;
   }
   .fa-node-js {
     padding-bottom: 2rem;
@@ -286,29 +375,37 @@ body .main {
     margin-top: 0;
     padding-top: 0;
   }
+ .contact-email-wrapper {
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+ }
 }
 
 @media screen and (max-width: 768px) {
-  .main {
-    padding-left: 2rem;
-    padding-right: 2rem;
+  .bio-text-wrapper-wrapper, .content-text-black-bg {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
   }
-  .heading-nav {
+  .main {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 
+  .contact-links {
+    font-size: .8rem;
+  }
+  /*.heading-nav {
     margin: 0;
     padding-right: 0;
     position: absolute;
     right: 2.5rem;
     top: 67px;
   }
-  /*.const-nav {
-    display: none;
-  }*/
   .heading-nav-div {
     border-bottom: 1px solid #a6a6a6;
-    /*padding-right: 1rem;
-    padding-left: 1rem;*/
-  }
+  }*/
 }
 @media screen and (max-width: 636px) {
   .const-nav {
@@ -319,6 +416,9 @@ body .main {
   }
 }
 @media screen and (max-width: 580px) {
+  #what-im-good-at, #what-i-know, #get-in-touch {
+    padding-top: 4rem;
+  }
   .article-content {
     border-bottom: none;
     -webkit-box-shadow: none;

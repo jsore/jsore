@@ -45,6 +45,7 @@ module.exports = {
      */
     const virtualConsole = new jsdom.VirtualConsole();
     virtualConsole.sendTo(console, { omitJSDOMErrors: true });
+    // virtualConsole.sendTo(console, { omitJSDOMErrors: false });
 
     /**
      * create the JSDOM environment and send that instance
