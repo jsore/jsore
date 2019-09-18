@@ -2,23 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- controls where resources are loaded from -->
+    <!--
+      only content from this page's source
+      only <this> JS from Node server on this page is allowed
+      unsafe inline'ed styles and fonts are fine, plus these <url>'s
+    -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'sha256-ustPzowBXERinmQhphxxTWd0FlEqTi0M41B0yLoUPLg=' 'sha256-WF+foEz05ESUpEDYCbdQgxyhJkALoZanu59hbDLH8Hs=' 'sha256-LDKMmslMZsFu5RTYFVJx1fBfg9RRDxO5jNKX+XeU7UE=';
+      style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com;
+      font-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com
+    ">
 
     <!-- default meta for browsers to use -->
+    <title>Justin Sorensen</title>
     <meta name="author" content="Justin Sorensen" />
     <meta name="description" content="Network Abuse Prevention, Security Specialist at IBM and Full Stack Developer" />
 
-
     <!-- facebook open graph tags and twitter meta -->
+    <meta property="og:title" content="Justin Sorensen" />
+    <meta property="og:image" content="assets/apple-touch-icon.png" />
+    <meta property="og:image:alt" content="Justin Sorensen's Portfolio" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Justin Sorensen">
-    <meta property="og:title" content="Justin Sorensen" />
-    <meta property="og:image" content="assets/favicon.png" />
     <meta property="og:description" content="Network Abuse Prevention, Security Specialist at IBM and Full Stack Developer" />
     <meta property="og:url" content="https://jsore.com" />
     <meta name="twitter:card" content="summary" />
-
-    <title>Justin Sorensen</title>
 
     <base href="/">
     <link rel="stylesheet" href="styles/fa/css/all.min.css" />
