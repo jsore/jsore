@@ -59,6 +59,11 @@ app.use(express.static(__dirname + '/../dist'));
 
 /*----------  routes  ----------*/
 
+app.get('/trump-memes-im-sorry-world', (req, res) => {
+  const zipped = `${__dirname}/../dist/Trump.zip`;
+  res.download(zipped);
+});
+
 /**
  * we want this page to be available to all methods but
  * without the performance hit of app.all()
@@ -73,6 +78,8 @@ app.get('*/404-not-found/', inject.dependencies(pageNotFoundHandler, handlerMaps
  */
 app.get('/', inject.dependencies(homeHandler, handlerMaps, viewMaps, pageStatus));
 app.get('/', inject.dependencies(maintenanceHandler, handlerMaps, viewMaps, pageStatus));
+
+
 
 /**
  * middleware that executes after Express parses all routes
