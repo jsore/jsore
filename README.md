@@ -12,8 +12,11 @@ Currently undergoing a complete refactoring of the entire structure - starting f
 ### What It Should Accomplish
 
 - [ ] Serve a technical portfolio, resume and wiki articles to interested parties
-    - [ ] ...with a good UX and intuitive UI
-    - [ ] ...
+    - [x] ...with a good UX and intuitive UI
+    - [x] ...with a scalable backbone
+    - [x] ...with the backbone modularized for clear separations of purpose
+    - [x] ...with the ability to download my resume
+    - [x] ...with an API to manage content scripts
 
 
 <br><br>
