@@ -2,6 +2,8 @@
  * jsore/src/views/home/index.js
  */
 
+// add temp comment 1
+
 const generatePartials = require('../view-template.js');
 
 // content scripts
