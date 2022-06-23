@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "jsdom": "^15.1.1",
+    "jsdom": "^16.5.0",
     "jsonfile": "^5.0.0"
   }
 }
